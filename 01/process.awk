@@ -10,15 +10,17 @@
 #        2
 
 function turn_left() {
-	print direction
+	print "original: " direction
 	direction--
-	print direction
+	print "decrement: " direction
 	if (direction < 0) { direction = -direction };
-	print direction
+	print "fix sign: " direction
 	direction %= 4;
-	print "turning left";
+	print "mod: " direction
+	#print "turning left";
 }
 function turn_right() {
+	--direction;
 	direction = (direction + (direction++) % 4);
 	print "turning right";
 }
@@ -45,7 +47,7 @@ BEGIN {
 	x=0
 	y=0
 }
-{
+/cheese/ {
 	for (i=0; i<=NF; ++i) {
 		print $i;
 		print substr($i,1,1) " " substr($i,2,2);
@@ -57,6 +59,6 @@ BEGIN {
 }
 END {
 	direction=0;
-#	for (i=0; i<5; ++i) { turn_left(); print direction }
-	for (i=0; i<5; ++i) { turn_right(); print direction }
+	for (i=0; i<5; ++i) { turn_left(); print direction }
+#	for (i=0; i<5; ++i) { turn_right(); print direction }
 }
