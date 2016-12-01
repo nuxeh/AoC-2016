@@ -1,9 +1,13 @@
-#!/usr/bin/awk
+#!/usr/bin/awk -f
 BEGIN {
-	FS=","
+	FS=", "
 }
 {
-for (i=0; i<=NF; ++i) print $i;
+	for (i=0; i<=NF; ++i) {
+		print $i;
+		print substr($i,1,1) " " substr($i,2,2);
+	}
+
 }
 END {
 }
