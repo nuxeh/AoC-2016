@@ -10,11 +10,16 @@
 #        2
 
 function turn_left() {
-	(direction--) % 4;
+	print direction
+	direction--
+	print direction
+	if (direction < 0) { direction = -direction };
+	print direction
+	direction %= 4;
 	print "turning left";
 }
 function turn_right() {
-	(direction++) % 4;
+	direction = (direction + (direction++) % 4);
 	print "turning right";
 }
 function step(n) {
@@ -52,6 +57,6 @@ BEGIN {
 }
 END {
 	direction=0;
-	for (i=0; i<5; ++i) { turn_left(); print direction }
+#	for (i=0; i<5; ++i) { turn_left(); print direction }
 	for (i=0; i<5; ++i) { turn_right(); print direction }
 }
