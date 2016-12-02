@@ -26,13 +26,12 @@ function step(n) {
 		y -= n;
 		break
 	}
-	++steps;
 }
 function abs(n) { return n < 0 ? -n : n }
 
 BEGIN {
 	FS=", "
-	direction=0; x=0; y=0; steps=0;
+	direction=0; x=0; y=0;
 }
 {
 	for (i=1; i<=NF; ++i) {
@@ -47,6 +46,5 @@ BEGIN {
 END {
 	# Calculate the distance in blocks
 	distance = abs(x) + abs(y)
-	if (steps != NF) print "Steps mismatch, taken " steps;
 	print "Number of blocks away: " distance " (in " NF " steps)"
 }
