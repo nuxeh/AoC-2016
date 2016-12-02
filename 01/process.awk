@@ -38,7 +38,7 @@ BEGIN {
 	for (i=1; i<=NF; ++i) {
 		if (substr($i,1,1) == "L") turn_left();
 		else if (substr($i,1,1) == "R") turn_right();
-		step(substr($i,2,2));
+		step(substr($i,2,length($i)));
 		print $i " x:" x " y:" y;
 	}
 
