@@ -32,6 +32,8 @@ function step(n) {
 	}
 }
 
+function abs(n) { return n < 0 ? -n : n }
+
 BEGIN {
 	FS=", "
 	direction=0
@@ -47,5 +49,9 @@ BEGIN {
 	}
 
 }
+
+# Calculate the distance in blocks
 END {
+	distance = abs(x) + abs(y)
+	print "Number of blocks away: " distance
 }
