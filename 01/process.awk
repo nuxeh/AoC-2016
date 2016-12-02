@@ -10,19 +10,10 @@
 #        2
 
 function turn_left() {
-	print "original: " direction
-	direction--
-	print "decrement: " direction
-	if (direction < 0) { direction = -direction };
-	print "fix sign: " direction
-	direction %= 4;
-	print "mod: " direction
-	#print "turning left";
+	if (--direction < 0) { direction = 3 };
 }
 function turn_right() {
-	--direction;
-	direction = (direction + (direction++) % 4);
-	print "turning right";
+	if (++direction > 3) { direction = 0 };
 }
 function step(n) {
 	switch(direction) {
@@ -60,5 +51,5 @@ BEGIN {
 END {
 	direction=0;
 	for (i=0; i<5; ++i) { turn_left(); print direction }
-#	for (i=0; i<5; ++i) { turn_right(); print direction }
+	for (i=0; i<5; ++i) { turn_right(); print direction }
 }
