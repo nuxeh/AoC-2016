@@ -9,12 +9,8 @@
 #        S
 #        2
 
-function turn_left() {
-	if (--direction < 0) { direction = 3 };
-}
-function turn_right() {
-	if (++direction > 3) { direction = 0 };
-}
+function turn_left()  { if (--direction < 0) direction = 3 }
+function turn_right() { if (++direction > 3) direction = 0 }
 function step(n) {
 	switch(direction) {
 	case 0:
@@ -32,28 +28,24 @@ function step(n) {
 	}
 	++steps;
 }
-
 function abs(n) { return n < 0 ? -n : n }
 
 BEGIN {
 	FS=", "
-	direction=0
-	x=0
-	y=0
-	steps=0
+	direction=0; x=0; y=0; steps=0;
 }
 {
 	for (i=0; i<=NF; ++i) {
 		if (substr($i,1,1) == "L") turn_left();
 		else if (substr($i,1,1) == "R") turn_right();
 		step(substr($i,2,2));
-		print $i " x:" x " y:" y
+		print $i " x:" x " y:" y;
 	}
 
 }
 
-# Calculate the distance in blocks
 END {
+	# Calculate the distance in blocks
 	distance = abs(x) + abs(y)
 	if (steps != NF) print "Steps mismatch, taken " steps;
 	print "Number of blocks away: " distance " (in " NF " steps)"
