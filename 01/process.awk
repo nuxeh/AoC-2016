@@ -38,18 +38,14 @@ BEGIN {
 	x=0
 	y=0
 }
-/cheese/ {
+{
 	for (i=0; i<=NF; ++i) {
-		print $i;
-		print substr($i,1,1) " " substr($i,2,2);
 		if (substr($i,1,1) == "L") turn_left();
 		else if (substr($i,1,1) == "R") turn_right();
-		print direction
+		step(substr($i,2,2));
+		print $i " x:" x " y:" y
 	}
 
 }
 END {
-	direction=0;
-	for (i=0; i<5; ++i) { turn_left(); print direction }
-	for (i=0; i<5; ++i) { turn_right(); print direction }
 }
