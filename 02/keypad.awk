@@ -43,14 +43,11 @@ function move(dir) {
 	}
 	key = a[y][x]
 	print "Press key: " key
-	code[NR] = key
+	code = code "" key
 }
 
 END {
-	final_code = ""
-	for (press in code)
-		final_code = final_code "" code[press]
-	print "the code is: " final_code
+	print "the code is: " code
 }
 
 
