@@ -9,30 +9,32 @@
 #        S
 #        2
 
-function turn_left()  { if (--direction < 0) direction = 3 }
-function turn_right() { if (++direction > 3) direction = 0 }
-function step(n) {
-	switch(direction) {
-	case 0:
-		x += n;
-		break
-	case 1:
-		y += n;
-		break
-	case 2:
-		x -= n;
-		break
-	case 3:
-		y -= n;
-		break
-	}
-}
-function abs(n) { return n < 0 ? -n : n }
-
 BEGIN {
 	FS=", "
 	direction=0; x=0; y=0;
 }
+
+function turn_left()  { if (--direction < 0) direction = 3 }
+function turn_right() { if (++direction > 3) direction = 0 }
+function step(n) {
+	for (s=n; s>0; --s) {
+		switch(direction) {
+		case 0:
+			++x;
+			break
+		case 1:
+			++y;
+			break
+		case 2:
+			--x;
+			break
+		case 3:
+			--y;
+			break
+		}
+	}
+}
+function abs(n) { return n < 0 ? -n : n }
 
 {
 	for (i=1; i<=NF; ++i) {
