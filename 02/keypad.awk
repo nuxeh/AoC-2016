@@ -20,10 +20,10 @@ BEGIN {
 function move(dir) {
 	switch (dir) {
 	case "U":
-		if (y < 3) ++y
+		if (y > 1) --y
 	break
 	case "D":
-		if (y > 1) --y
+		if (y < 3) ++y
 	break
 	case "L":
 		if (x > 1) --x
