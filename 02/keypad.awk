@@ -23,10 +23,10 @@ function move(dir) {
 		if (y < 3) ++y
 	break
 	case "D":
-		if (y > 0) --y
+		if (y > 1) --y
 	break
 	case "L":
-		if (x > 0) --x
+		if (x > 1) --x
 	break
 	case "R":
 		if (x < 3) ++x
