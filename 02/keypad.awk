@@ -17,16 +17,34 @@ BEGIN {
 	FS=""
 }
 
+function move(dir) {
+	switch (dir) {
+	case "U":
+		if (y < 3) ++y
+	break
+	case "D":
+		if (y > 0) --y
+	break
+	case "L":
+		if (x > 0) --y
+	break
+	case "R":
+		if (x < 3) ++y
+	break
+	}
+}
+
 {
 	print $0
 	# Parse each movement
 	for (i=1; i<=NF; ++i) {
-		print $i
+		move($i)
+		print x " " y
 	}
+	print "Press key: " a[y][x]
 }
 
 END {
-	print a[x][y]
 }
 
 
