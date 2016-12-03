@@ -32,6 +32,7 @@ function step(n) {
 			--y;
 			break
 		}
+		print "  " $i " x:" x " y:" y;
 	}
 }
 function abs(n) { return n < 0 ? -n : n }
