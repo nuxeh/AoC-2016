@@ -33,6 +33,7 @@ BEGIN {
 	FS=", "
 	direction=0; x=0; y=0;
 }
+
 {
 	for (i=1; i<=NF; ++i) {
 		if (substr($i,1,1) == "L") turn_left();
