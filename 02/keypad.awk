@@ -15,7 +15,7 @@ BEGIN {
 	# Start at 5:
 	x = 2; y = 4;
 
-	for (i=1; i<num_rows; ++i) {
+	for (i=1; i<=num_rows; ++i) {
 		a[i][0] = "";
 		split(r[i], a[i], " ")
 	}
@@ -26,16 +26,16 @@ BEGIN {
 function move(dir) {
 	switch (dir) {
 	case "U":
-		if (y-- != ".") --y
+		if (a[y-1][x] != ".") --y
 	break
 	case "D":
-		if (y++ != ".") ++y
+		if (a[y+1][x] != ".") ++y
 	break
 	case "L":
-		if (x-- != ".") --x
+		if (a[y][x-1] != ".") --x
 	break
 	case "R":
-		if (x++ != ".") ++x
+		if (a[y][x+1] != ".") ++x
 	break
 	}
 }
