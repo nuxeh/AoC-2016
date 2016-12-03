@@ -26,10 +26,10 @@ function move(dir) {
 		if (y > 0) --y
 	break
 	case "L":
-		if (x > 0) --y
+		if (x > 0) --x
 	break
 	case "R":
-		if (x < 3) ++y
+		if (x < 3) ++x
 	break
 	}
 }
