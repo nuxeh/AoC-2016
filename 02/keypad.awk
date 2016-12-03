@@ -14,9 +14,14 @@ BEGIN {
 		split(r[i], a[i], " ")
 	}
 }
-{
 
+{
+	# Parse each movement
+	for (i=1; i<length($0); ++i) {
+		print substr($0, i, i)
+	}
 }
+
 END {
 	print a[x][y]
 }
