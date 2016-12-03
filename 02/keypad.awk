@@ -26,16 +26,16 @@ BEGIN {
 function move(dir) {
 	switch (dir) {
 	case "U":
-		if (y > 1) --y
+		if (y-- != ".") --y
 	break
 	case "D":
-		if (y < 3) ++y
+		if (y++ != ".") ++y
 	break
 	case "L":
-		if (x > 1) --x
+		if (x-- != ".") --x
 	break
 	case "R":
-		if (x < 3) ++x
+		if (x++ != ".") ++x
 	break
 	}
 }
