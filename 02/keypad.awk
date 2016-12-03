@@ -13,12 +13,15 @@ BEGIN {
 		a[i][0] = "";
 		split(r[i], a[i], " ")
 	}
+
+	FS=""
 }
 
 {
+	print $0
 	# Parse each movement
-	for (i=1; i<length($0); ++i) {
-		print substr($0, i, i)
+	for (i=1; i<=NF; ++i) {
+		print $i
 	}
 }
 
