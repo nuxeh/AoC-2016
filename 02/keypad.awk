@@ -39,7 +39,6 @@ function move(dir) {
 	# Parse each movement
 	for (i=1; i<=NF; ++i) {
 		move($i)
-		print x " " y
 	}
 	key = a[y][x]
 	print "Press key: " key
