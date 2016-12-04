@@ -1,11 +1,12 @@
 #!/usr/bin/awk -f
 
 BEGIN {
-	FS="[:space:]*";
+	FS="  ";
 }
 
 {
-	for (i=0; i<=NF; ++i) {
+	print $0
+	for (i=2; i<=NF; ++i) {
 		print $i
 	}
 }
