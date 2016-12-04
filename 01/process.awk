@@ -35,11 +35,12 @@ function step(n) {
 			break
 		}
 		print "  " $i " x:" x " y:" y;
-		print NF
 		current = "x:" x " y:" y;
-		crumbs[crumb++] = current
 		for (c in crumbs) { print crumbs[c];
-			if (crumbs[c] == current) print "duplicate at c:" c " crumb:" current }
+			if (crumbs[c] == current) print "duplicate at c:" c " crumb:" current
+			else { print "not duplicate" }
+		}
+		crumbs[crumb++] = current
 	}
 }
 function abs(n) { return n < 0 ? -n : n }
