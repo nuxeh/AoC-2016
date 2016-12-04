@@ -5,28 +5,27 @@
 
 BEGIN {
 	FS="\\[|]|-"
+	ARGV[1] == "D=1" ? debug=1 : debug=0
 }
 
-{
-	print "--"
+function dbg(str) {if (debug) print str}
 
+{
 	check_in = $(NF-1)
 	sector_id = $(NF-2)
 
 	i = 1
 	delete a
 	while (i < (NF-2)) {
-		print i " : " $i
-
+		dbg(i " : " $i)
 		a[i] = $i
-
 		++i
 	}
+
 	asort(a, elem)
-	print "sorted: "
 	for(i in a) {
-		print i "s: " elem[i]
+		dbg(i "s: " elem[i])
 	}
-	print "checksum: " check_in
-	print "sector id: " sector_id
+	dbg("checksum: " check_in)
+	dbg("sector id: " sector_id)
 }
