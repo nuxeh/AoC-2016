@@ -21,5 +21,5 @@ BEGIN {
 }
 
 END {
-	print count " triangles are valid"
+	print count " of " NR " triangles are valid"
 }
