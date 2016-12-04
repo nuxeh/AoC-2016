@@ -16,9 +16,19 @@ function dbg(str) {if (debug) print str}
 
 	i = 1
 	delete a
+	delete n_l
 	while (i < (NF-2)) {
 		dbg(i " : " $i)
 		a[i] = $i
+
+		split($i, chars, "")
+		for (j in chars) {
+			# Vote for most common letters
+			l = chars[j]
+			n_l[l]++
+		}
+			
+
 		++i
 	}
 
@@ -28,4 +38,10 @@ function dbg(str) {if (debug) print str}
 	}
 	dbg("checksum: " check_in)
 	dbg("sector id: " sector_id)
+
+	# Tied if field length is 1
+
+	# Most common letters
+	for (k in n_l)
+		dbg(k ": " n_l[k])
 }
