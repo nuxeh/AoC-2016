@@ -34,11 +34,9 @@ function step(n) {
 			--y;
 			break
 		}
-		print "  " $i " x:" x " y:" y;
 		current = "x:" x " y:" y;
-		for (c in crumbs) { print crumbs[c];
-			if (crumbs[c] == current) print "duplicate at c:" c " crumb:" current
-			else { print "not duplicate" }
+		for (c in crumbs) {
+			if (crumbs[c] == current) print "duplicate at c:" c " crumb:" current;
 		}
 		crumbs[crumb++] = current
 	}
@@ -50,7 +48,6 @@ function abs(n) { return n < 0 ? -n : n }
 		if (substr($i,1,1) == "L") turn_left();
 		else if (substr($i,1,1) == "R") turn_right();
 		step(substr($i,2,length($i)))
-		print $i " x:" x " y:" y;
 	}
 
 }
