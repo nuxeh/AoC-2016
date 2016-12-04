@@ -10,6 +10,16 @@ BEGIN {
 
 function dbg(str) {if (debug) print str}
 
+# Sort letters by count and alphabetically
+function sort_letters(i1, v1, i2, v2) {
+	if (v2 < v1)
+		return -1
+	else if (v2 == v1)
+		return (i2 > i1) ? -1 : +1
+	else if (v2 > v1)
+		return +1
+}
+
 {
 	check_in = $(NF-1)
 	sector_id = $(NF-2)
@@ -43,7 +53,7 @@ function dbg(str) {if (debug) print str}
 	# Tied if field length is 1
 
 	# Most common letters
-	PROCINFO["sorted_in"] = "@val_type_desc"
+	PROCINFO["sorted_in"] = "sort_letters"
 	for (k in n_l)
 		dbg(k ": " n_l[k])
 
