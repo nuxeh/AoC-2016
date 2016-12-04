@@ -1,16 +1,23 @@
 #!/usr/bin/awk -f
 
 BEGIN {
-	FS="  ";
+	FS=" ";
 	count=0
+	debug=1
 }
 
+function dbg(str) {if (debug) print str}
+
 {
-	for (i=2; i<=NF; ++i) {
+	dbg($0)
+
+	for (i=1; i<=NF; ++i) {
 		a[i] = $i
 	}
 
 	asort(a, a_sorted)
+	for (e in a_sorted)
+		dbg(e ": " a_sorted[e])
 
 	if (a_sorted[1] + a_sorted[2] > a_sorted[3])
 		++count
