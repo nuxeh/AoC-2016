@@ -3,7 +3,7 @@
 BEGIN {
 	FS=" ";
 	count=0
-	debug=1
+	ARGV[1] == "D=1" ? debug=1 : debug=0
 }
 
 function dbg(str) {if (debug) print str}
