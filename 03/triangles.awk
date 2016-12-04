@@ -13,7 +13,10 @@ BEGIN {
 
 	asort(a, a_sorted)
 	for (e in a_sorted)
-		print a_sorted[e]
+		print e ": " a_sorted[e]
+
+	if (a_sorted[1] + a_sorted[2] < a_sorted[3])
+		print "invalid"
 }
 
 END {
