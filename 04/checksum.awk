@@ -43,9 +43,9 @@ function dbg(str) {if (debug) print str}
 	# Tied if field length is 1
 
 	# Most common letters
-	asort(n_l, n_l_sorted)
-	for (k in n_l_sorted)
-		dbg(k ": " n_l_sorted[k])
+	PROCINFO["sorted_in"] = "@val_type_desc"
+	for (k in n_l)
+		dbg(k ": " n_l[k])
 
 	# Compute checksum
 	check_out = 1
