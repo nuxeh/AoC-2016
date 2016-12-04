@@ -2,6 +2,7 @@
 
 BEGIN {
 	FS="  ";
+	count=0
 }
 
 {
@@ -15,10 +16,10 @@ BEGIN {
 	for (e in a_sorted)
 		print e ": " a_sorted[e]
 
-	if (a_sorted[1] + a_sorted[2] < a_sorted[3])
-		print "invalid"
+	if (a_sorted[1] + a_sorted[2] > a_sorted[3])
+		++count
 }
 
 END {
-
+	print count " triangles are valid"
 }
