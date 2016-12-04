@@ -10,7 +10,7 @@ BEGIN {
 function dbg(str) {if (debug) print str}
 
 {
-	print $0
+	dbg("-- record: " $1 " " $2 " " $3 " --")
 
 	t1[r_count] = $1
 	t2[r_count] = $2
@@ -26,21 +26,21 @@ function dbg(str) {if (debug) print str}
 	if (++r_count == 4) {
 		r_count=1
 		dbg("calculating 3 triangles")
-		#calculate()
+		calculate(t1)
+		calculate(t2)
+		calculate(t3)
 	}
 
 }
 
-function calculate() {
-	dbg($0)
+function calculate(array) {
+	for (f in array)
+		dbg(f " : " array[f])
 
-	for (i=1; i<=NF; ++i) {
-		a[i] = $i
-	}
+	asort(array, a_sorted)
 
-	asort(a, a_sorted)
 	for (e in a_sorted)
-		dbg(e ": " a_sorted[e])
+		dbg(e "s: " a_sorted[e])
 
 	if (a_sorted[1] + a_sorted[2] > a_sorted[3])
 		++count
