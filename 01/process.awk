@@ -36,7 +36,10 @@ function step(n) {
 		}
 		current = "x:" x " y:" y;
 		for (c in crumbs) {
-			if (crumbs[c] == current) print "duplicate at c:" c " crumb:" current;
+			if (crumbs[c] == current) {
+				print "duplicate at c:" c " crumb:" current;
+				exit;
+			}
 		}
 		crumbs[crumb++] = current
 	}
