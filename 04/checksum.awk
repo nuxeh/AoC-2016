@@ -17,8 +17,8 @@ function dbg(str) {if (debug) print str}
 	i = 1
 	delete a
 	delete n_l
+
 	while (i < (NF-2)) {
-		dbg(i " : " $i)
 		a[i] = $i
 
 		split($i, chars, "")
@@ -27,12 +27,13 @@ function dbg(str) {if (debug) print str}
 			l = chars[j]
 			n_l[l]++
 		}
-			
 
+		dbg(i " : " $i)
 		++i
 	}
 
 	asort(a, elem)
+
 	for(i in a) {
 		dbg(i "s: " elem[i])
 	}
@@ -42,6 +43,11 @@ function dbg(str) {if (debug) print str}
 	# Tied if field length is 1
 
 	# Most common letters
-	for (k in n_l)
-		dbg(k ": " n_l[k])
+	asort(n_l, n_l_sorted)
+	for (k in n_l_sorted)
+		dbg(k ": " n_l_sorted[k])
+
+	# Compute checksum
+	check_out = 1
+	dbg("computed checksum: " check_out)
 }
