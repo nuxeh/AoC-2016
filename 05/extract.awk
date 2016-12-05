@@ -1,19 +1,23 @@
 #!/usr/bin/awk -f
 
-BEGIN {FS=""; count=0; ORS=""}
+BEGIN {FS=""; count=0; ORS=""
+	split("_______", a, "")
+}
 
 {
-	print $6 $7 "\n"
+	print $0 "\n"
 	if ($6 > 0 && $6 <= 7) {
-		print "good\n"
-		a[count] = $7
+		a[$6] = $7
+		echo()
 		if (++count == 8)
 			exit
 	}
 }
 
-END{
-	for (i in a)
-		print a[i]
-	print "\n"
+function echo(){
+	print "|"
+	for (i in a) {
+			print a[i]
+	}
+	print "|\n"
 }
