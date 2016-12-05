@@ -1,14 +1,14 @@
 #!/usr/bin/awk -f
 
 BEGIN {FS=""; count=0; ORS=""
-	split("_______", a, "")
+	split("________", a, "")
 }
 
 {
 	print $0 "\n"
 	if ($6 > 0 && $6 <= 7) {
-		if (a[$6] == "_") ++count;
-		a[$6] = $7
+		if (a[$6+1] == "_") ++count;
+		a[$6+1] = $7
 		echo()
 		if (count == 7)
 			exit
