@@ -9,7 +9,7 @@ BEGIN {
 	ARGV[1] == "D=1" ? debug=1 : debug=0
 }
 
-function dbg(str) {if (debug) print str}
+function dbg(str) {if (debug) print str  > "/dev/stderr"}
 
 # Sort letters by count and alphabetically
 function sort_letters(i1, v1, i2, v2) {
@@ -73,6 +73,6 @@ function sort_letters(i1, v1, i2, v2) {
 }
 
 END {
-	print valid " valid records of " NR
-	print "total of valid sector ids: " total
+	print valid " valid records of " NR  > "/dev/stderr"
+	print "total of valid sector ids: " total  > "/dev/stderr"
 }
