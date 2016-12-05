@@ -22,8 +22,6 @@ function increment(num,inc) {for (k=inc; k>0; k--) {num = inc_1(num)} return num
 	delete a
 
 	while (i < (NF-2)) {
-		a[i] = $i
-
 		split($i, chars, "")
 		for (j in chars) {
 			for (l in alphabet)
@@ -31,17 +29,7 @@ function increment(num,inc) {for (k=inc; k>0; k--) {num = inc_1(num)} return num
 					print chars[j] " " alphabet[increment(l, sector_id)]
 					continue
 				}
-
 		}
-
-		dbg(i " : " $i)
 		++i
 	}
-
-	for(i in a) {
-		dbg(i "s: " elem[i])
-	}
-	dbg("checksum: " check_in)
-	dbg("sector id: " sector_id)
-
 }
