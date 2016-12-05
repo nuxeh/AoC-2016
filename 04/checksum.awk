@@ -26,10 +26,8 @@ function sort_letters(i1, v1, i2, v2) {
 	sector_id = $(NF-2)
 
 	i = 1
-	t_count = 1
 	delete a
 	delete n_l
-	delete t
 
 	while (i < (NF-2)) {
 		a[i] = $i
@@ -40,9 +38,6 @@ function sort_letters(i1, v1, i2, v2) {
 			l = chars[j]
 			n_l[l]++
 		}
-
-		if (length($i) == 1)
-			t[count++] = $i
 
 		dbg(i " : " $i)
 		++i
@@ -55,11 +50,6 @@ function sort_letters(i1, v1, i2, v2) {
 	}
 	dbg("checksum: " check_in)
 	dbg("sector id: " sector_id)
-
-	# Tied if field length is 1
-	dbg("ties:")
-	for (tn in t)
-		dbg(tn ": " t[tn])
 
 	# Most common letters
 	dbg("letters:")
