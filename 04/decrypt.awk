@@ -5,7 +5,7 @@
 
 BEGIN {
 	FS="\\[|]|-"
-	OFS=" "
+	ORS=""
 	split("abcdefghijklmnopqrstuvwxyz", alphabet, "")
 	ARGV[1] == "D=1" ? debug=1 : debug=0
 }
@@ -26,10 +26,15 @@ function increment(num,inc) {for (k=inc; k>0; k--) {num = inc_1(num)} return num
 		for (j in chars) {
 			for (l in alphabet)
 				if (alphabet[l] == chars[j]) {
-					print chars[j] " " alphabet[increment(l, sector_id)]
+					l_new = alphabet[increment(l, sector_id)]
+					dbg(chars[j] " " l_new "\n")
+					print l_new
 					continue
 				}
 		}
+		dbg("\n")
+		print " "
 		++i
 	}
+	print "\n"
 }
