@@ -69,6 +69,7 @@ function sort_letters(i1, v1, i2, v2) {
 		dbg("valid")
 		total += sector_id
 		valid++
+		print $0
 	}
 }
 
