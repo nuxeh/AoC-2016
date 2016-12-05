@@ -5,6 +5,7 @@
 
 BEGIN {
 	FS="\\[|]|-"
+	total = 0; valid = 0
 	ARGV[1] == "D=1" ? debug=1 : debug=0
 }
 
@@ -63,10 +64,25 @@ function sort_letters(i1, v1, i2, v2) {
 	# Most common letters
 	dbg("letters:")
 	PROCINFO["sorted_in"] = "sort_letters"
-	for (k in n_l)
+	out_count=1
+	check_out = ""
+	for (k in n_l) {
 		dbg(k ": " n_l[k])
+		if (out_count <= 5) check_out = check_out "" k
+		++out_count;
+	}
 
 	# Compute checksum
-	check_out = 1
 	dbg("computed checksum: " check_out)
+
+	if (check_in == check_out) {
+		dbg("valid")
+		total += sector_id
+		valid++
+	}
+}
+
+END {
+	print valid " valid records of " NR
+	print "total of valid sector ids: " total
 }
