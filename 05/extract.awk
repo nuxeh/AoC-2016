@@ -7,9 +7,10 @@ BEGIN {FS=""; count=0; ORS=""
 {
 	print $0 "\n"
 	if ($6 > 0 && $6 <= 7) {
+		if (a[$6] == "_") ++count;
 		a[$6] = $7
 		echo()
-		if (++count == 8)
+		if (count == 7)
 			exit
 	}
 }
