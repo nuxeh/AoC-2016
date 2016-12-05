@@ -5,10 +5,14 @@
 
 BEGIN {
 	FS="\\[|]|-"
+	OFS=" "
+	split("abcdefghijklmnopqrstuvwxyz", alphabet, "")
 	ARGV[1] == "D=1" ? debug=1 : debug=0
 }
 
 function dbg(str) {if (debug) print str > "/dev/stderr"}
+function increment(num) { return (++num > 26) ? 1 : num }
+
 
 {
 	check_in = $(NF-1)
@@ -22,7 +26,12 @@ function dbg(str) {if (debug) print str > "/dev/stderr"}
 
 		split($i, chars, "")
 		for (j in chars) {
-			l = chars[j]
+			for (l in alphabet)
+				if (alphabet[l] == chars[j]) {
+					print chars[j] " " alphabet[increment(l)]
+					continue
+				}
+
 		}
 
 		dbg(i " : " $i)
@@ -35,9 +44,4 @@ function dbg(str) {if (debug) print str > "/dev/stderr"}
 	dbg("checksum: " check_in)
 	dbg("sector id: " sector_id)
 
-}
-
-END {
-	print valid " valid records of " NR
-	print "total of valid sector ids: " total
 }
