@@ -11,8 +11,8 @@ BEGIN {
 }
 
 function dbg(str) {if (debug) print str > "/dev/stderr"}
-function increment(num) { return (++num > 26) ? 1 : num }
-
+function inc_1(num) { return (++num > 26) ? 1 : num }
+function increment(num,inc) {for (k=inc; k>0; k--) {num = inc_1(num)} return num}
 
 {
 	check_in = $(NF-1)
@@ -28,7 +28,7 @@ function increment(num) { return (++num > 26) ? 1 : num }
 		for (j in chars) {
 			for (l in alphabet)
 				if (alphabet[l] == chars[j]) {
-					print chars[j] " " alphabet[increment(l)]
+					print chars[j] " " alphabet[increment(l, 2)]
 					continue
 				}
 
