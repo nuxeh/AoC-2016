@@ -36,5 +36,5 @@ function increment(num,inc) {for (k=inc; k>0; k--) {num = inc_1(num)} return num
 		print " "
 		++i
 	}
-	print "\n"
+	print "\t\t[" $0 "]\n"
 }
