@@ -4,6 +4,7 @@ import md5
 import sys
 
 input = 'wtnhxymk'
+input = 'abc'
 num = 0
 count = 0
 password = ""
