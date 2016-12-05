@@ -28,7 +28,7 @@ function increment(num,inc) {for (k=inc; k>0; k--) {num = inc_1(num)} return num
 		for (j in chars) {
 			for (l in alphabet)
 				if (alphabet[l] == chars[j]) {
-					print chars[j] " " alphabet[increment(l, 2)]
+					print chars[j] " " alphabet[increment(l, sector_id)]
 					continue
 				}
 
