@@ -2,8 +2,8 @@
 
 import md5
 
-input = 'abc'
-num = 3231928
+input = 'wtnhxymk'
+num = 0
 count = 0
 password = ""
 
