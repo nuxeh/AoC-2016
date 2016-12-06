@@ -7,6 +7,8 @@
 #
 # Stop after 8 characters if printing to a terminal, or continuously output
 # valid checksums if output is redirected.
+#
+# TODO: fix broken pipe error
 
 import md5
 import sys
