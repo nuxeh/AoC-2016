@@ -15,7 +15,8 @@ BEGIN {
 
 END {
 	for (j in f_letter) {
-		PROCINFO["sorted_in"] = "@val_type_desc"
+		#PROCINFO["sorted_in"] = "@val_type_desc"
+		PROCINFO["sorted_in"] = "@val_type_asc"
 		got_letter = 0
 		for (k in f_letter[j]) {
 			print k ": " f_letter[j][k] "|"
