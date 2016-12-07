@@ -6,10 +6,10 @@
 
 BEGIN {
 	FS="\\[|]"
-	ARGV[1] == "D=1" ? debug=1 : debug=0
+	if (substr(ARGV[1],1,2) == "D=") debug=substr(ARGV[1],3,1)
 }
 
-function dbg(str) {if (debug) print str  > "/dev/stderr"}
+function dbg(str,lvl) {if (debug==lvl) print str  > "/dev/stderr"}
 
 function process(str) {
 	split(str, a, "")
@@ -27,14 +27,14 @@ function result(arr) {
 	even = 0
 	good = 0
 	for (k=1; k<=NF; k++) {
-		dbg(k ": " arr[k])
+		dbg(k ": " arr[k], 1)
 
 		if (even == 1) {
 			if (arr[k] == 1) return 0
 		} else {
 			if (arr[k] == 1) {
 				good = 1
-				dbg(arr[k] " is good (" k ")")
+				dbg(arr[k] " is good (" k ")", 1)
 			}
 		}
 
@@ -55,7 +55,7 @@ function result(arr) {
 			r = process(substr($i, j, 4))
 			b[i] = r
 
-			dbg(j "\t" r "\t" substr($i, j, 4))
+			dbg(j "\t" r "\t" substr($i, j, 4), 1)
 
 			if (r == 1) {
 				break
@@ -66,7 +66,7 @@ function result(arr) {
 		for (m=1; m<=l-2; ++m) {
 			sstr = substr($i, m, 3)
 			r = process_ssl(sstr)
-			print sstr " [" r "] hypernet: " hypernet
+			dbg(sstr " [" r "] hypernet: " hypernet, 2)
 
 			if (r == 1) {
 				if (hypernet == 0)
@@ -81,13 +81,13 @@ function result(arr) {
 
 	if (result_ssl(c,d)) count_ssl++
 	if (result(b)) count++
-	dbg("count=" count)
+	dbg("count=" count, 1)
 }
 
 function ababab(sup_s, hyp_s) {
 	if (substr(sup_s, 1, 1) == substr(hyp_s, 2, 1))
 		if (substr(sup_s, 2, 1) == substr(hyp_s, 1, 1)) {
-			print "match s: " sup_s " h: " hyp_s
+			dbg("match s: " sup_s " h: " hyp_s, 2)
 			return 1
 		}
 	return 0
@@ -96,7 +96,7 @@ function ababab(sup_s, hyp_s) {
 function result_ssl(super, hyper) {
 	for (aba in super) {
 		for (bab in hyper) {
-			print "super: " super[aba] " hyper: " hyper[bab]
+			dbg("super: " super[aba] " hyper: " hyper[bab], 2)
 			if (ababab(super[aba], hyper[bab]) == 1) {
 				return 1
 			}
