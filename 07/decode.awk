@@ -68,7 +68,7 @@ function result(arr) {
 			r = process_ssl(sstr)
 			print sstr " [" r "] hypernet: " hypernet
 
-			if (r = 1) {
+			if (r == 1) {
 				if (hypernet == 0)
 					c[i "_" m] = sstr
 				else
@@ -84,22 +84,29 @@ function result(arr) {
 	dbg("count=" count)
 }
 
+function ababab(sup_s, hyp_s) {
+	if (substr(sup_s, 1, 1) == substr(hyp_s, 2, 1))
+		if (substr(sup_s, 2, 1) == substr(hyp_s, 1, 1)) {
+			print "match s: " sup_s " h: " hyp_s
+			return 1
+		}
+	return 0
+}
+
 function result_ssl(super, hyper) {
-	print $0
 	for (aba in super) {
-		print super[aba]
 		for (bab in hyper) {
-			print hyper[bab]
 			print "super: " super[aba] " hyper: " hyper[bab]
-			if (substr(super[aba],1,1) == substr(hyper[bab],2,1))
+			if (ababab(super[aba], hyper[bab]) == 1) {
 				return 1
+			}
 		}
 	}
-
 	return 0
 }
 
 END {
 	print "count of TLS ips: " count
 	print "count of SSL ips: " count_ssl
+	print "total records: " NR
 }
