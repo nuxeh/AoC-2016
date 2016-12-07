@@ -10,12 +10,21 @@ function process(str) {
 }
 
 function result(arr) {
-	if (arr[2] == 1)
-		return 0
-	if (arr[1] == 1 || arr[3] == 1)
-		return 1
-	else
-		return 0
+	even = 0
+	good = 0
+	for (k=1; k<=NF; k++) {
+		print k ": " arr[k]
+
+		if (even == 1) {
+			if (arr[k] == 1) return 0
+		} else {
+			if (arr[k] == 1) good = 1
+			print arr[k] " is good"
+		}
+
+		if (++even == 2) even = 0
+	}
+	return good
 }
 
 {
@@ -25,9 +34,9 @@ function result(arr) {
 		l = length($i)
 		for (j=1; j<=l-3; ++j) {
 			r = process(substr($i, j, 4))
-			print j " " r " " substr($i, j, 4)
+			print j "\t" r "\t" substr($i, j, 4)
+			b[i] = r
 			if (r == 1) {
-				b[i] = r
 				break
 			}
 		}
