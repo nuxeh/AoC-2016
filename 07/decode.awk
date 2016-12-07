@@ -17,6 +17,12 @@ function process(str) {
 	return (a[1] == a[4] && a[2] == a[3]) ? 1 : 0
 }
 
+function process_ssl(str) {
+	split(str, a, "")
+	if (a[1] == a[2]) return 0
+	return (a[1] == a[3]) ? 1 : 0
+}
+
 function result(arr) {
 	even = 0
 	good = 0
@@ -39,6 +45,9 @@ function result(arr) {
 
 {
 	delete b
+	delete c
+	delete d
+	hypernet = 0
 	for (i=1; i<=NF; i++) {
 		l = length($i)
 
@@ -51,12 +60,46 @@ function result(arr) {
 			if (r == 1) {
 				break
 			}
+
 		}
+
+		for (m=1; m<=l-2; ++m) {
+			sstr = substr($i, m, 3)
+			r = process_ssl(sstr)
+			print sstr " [" r "] hypernet: " hypernet
+
+			if (r = 1) {
+				if (hypernet == 0)
+					c[i "_" m] = sstr
+				else
+					d[i "_" m] = sstr
+			}
+		}
+
+		if (++hypernet > 1) hypernet = 0
 	}
+
+	if (result_ssl(c,d)) count_ssl++
 	if (result(b)) count++
 	dbg("count=" count)
 }
 
+function result_ssl(super, hyper) {
+	print $0
+	for (aba in super) {
+		print super[aba]
+		for (bab in hyper) {
+			print hyper[bab]
+			print "super: " super[aba] " hyper: " hyper[bab]
+			if (substr(super[aba],1,1) == substr(hyper[bab],2,1))
+				return 1
+		}
+	}
+
+	return 0
+}
+
 END {
 	print "count of TLS ips: " count
+	print "count of SSL ips: " count_ssl
 }
