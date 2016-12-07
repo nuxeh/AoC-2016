@@ -6,7 +6,6 @@ BEGIN {
 
 function process(str) {
 	split(str, a, "")
-	for (z in a) print a[z]
 	return (a[1] == a[4] && a[2] == a[3]) ? 1 : 0
 }
 
@@ -33,8 +32,8 @@ function result(arr) {
 {
 	delete b
 	for (i=1; i<=NF; i++) {
-		print $i
 		l = length($i)
+
 		for (j=1; j<=l-3; ++j) {
 			r = process(substr($i, j, 4))
 			b[i] = r
@@ -47,6 +46,7 @@ function result(arr) {
 		}
 	}
 	if (result(b)) count++
+	print "count=" count
 }
 
 END {
