@@ -22,10 +22,14 @@ function result(arr) {
 	delete b
 	for (i=0; i<=NF; i++) {
 		print $i
-		if (length($i) == 4) {
-			r = process($i)
-			print r
-			b[i] = r
+		l = length($i)
+		for (j=1; j<=l-3; ++j) {
+			r = process(substr($i, j, 4))
+			print j " " r " " substr($i, j, 4)
+			if (r == 1) {
+				b[i] = r
+				break
+			}
 		}
 	}
 	if (result(b)) count++
