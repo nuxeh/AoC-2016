@@ -6,7 +6,10 @@
 
 BEGIN {
 	FS="\\[|]"
+	ARGV[1] == "D=1" ? debug=1 : debug=0
 }
+
+function dbg(str) {if (debug) print str  > "/dev/stderr"}
 
 function process(str) {
 	split(str, a, "")
@@ -18,14 +21,14 @@ function result(arr) {
 	even = 0
 	good = 0
 	for (k=1; k<=NF; k++) {
-		print k ": " arr[k]
+		dbg(k ": " arr[k])
 
 		if (even == 1) {
 			if (arr[k] == 1) return 0
 		} else {
 			if (arr[k] == 1) {
 				good = 1
-				print arr[k] " is good (" k ")"
+				dbg(arr[k] " is good (" k ")")
 			}
 		}
 
@@ -43,7 +46,7 @@ function result(arr) {
 			r = process(substr($i, j, 4))
 			b[i] = r
 
-			print j "\t" r "\t" substr($i, j, 4)
+			dbg(j "\t" r "\t" substr($i, j, 4))
 
 			if (r == 1) {
 				break
@@ -51,7 +54,7 @@ function result(arr) {
 		}
 	}
 	if (result(b)) count++
-	print "count=" count
+	dbg("count=" count)
 }
 
 END {
