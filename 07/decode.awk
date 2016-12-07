@@ -1,4 +1,8 @@
 #!/usr/bin/awk -f
+#
+# Scan IPv7 addresses, ABBA patterns in odd entries (separated by square
+# brackets) indicate TLS support, unless there is an ABBA pattern in even
+# entries. AAAA patterns are not valid.
 
 BEGIN {
 	FS="\\[|]"
@@ -6,6 +10,7 @@ BEGIN {
 
 function process(str) {
 	split(str, a, "")
+	if (a[1] == a[2]) return 0
 	return (a[1] == a[4] && a[2] == a[3]) ? 1 : 0
 }
 
