@@ -5,6 +5,7 @@ BEGIN {
 }
 
 function process(str) {
+	print str
 	split($i, a, "")
 	return (a[1] == a[4] && a[2] == a[3]) ? 1 : 0
 }
