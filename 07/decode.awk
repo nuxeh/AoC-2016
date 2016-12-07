@@ -5,8 +5,8 @@ BEGIN {
 }
 
 function process(str) {
-	print str
-	split($i, a, "")
+	split(str, a, "")
+	for (z in a) print a[z]
 	return (a[1] == a[4] && a[2] == a[3]) ? 1 : 0
 }
 
@@ -19,8 +19,10 @@ function result(arr) {
 		if (even == 1) {
 			if (arr[k] == 1) return 0
 		} else {
-			if (arr[k] == 1) good = 1
-			print arr[k] " is good"
+			if (arr[k] == 1) {
+				good = 1
+				print arr[k] " is good (" k ")"
+			}
 		}
 
 		if (++even == 2) even = 0
@@ -30,13 +32,15 @@ function result(arr) {
 
 {
 	delete b
-	for (i=0; i<=NF; i++) {
+	for (i=1; i<=NF; i++) {
 		print $i
 		l = length($i)
 		for (j=1; j<=l-3; ++j) {
 			r = process(substr($i, j, 4))
-			print j "\t" r "\t" substr($i, j, 4)
 			b[i] = r
+
+			print j "\t" r "\t" substr($i, j, 4)
+
 			if (r == 1) {
 				break
 			}
