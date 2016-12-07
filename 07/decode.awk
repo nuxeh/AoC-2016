@@ -3,6 +3,9 @@
 # Scan IPv7 addresses, ABBA patterns in odd entries (separated by square
 # brackets) indicate TLS support, unless there is an ABBA pattern in even
 # entries. AAAA patterns are not valid.
+#
+# IP supports SSL if supernet contains ABA, and hypernet contains matching
+# BAB.
 
 BEGIN {
 	FS="\\[|]"
@@ -11,12 +14,14 @@ BEGIN {
 
 function dbg(str,lvl) {if (debug==lvl) print str  > "/dev/stderr"}
 
+# Sequences of length 4 (ABBA)
 function process(str) {
 	split(str, a, "")
 	if (a[1] == a[2]) return 0
 	return (a[1] == a[4] && a[2] == a[3]) ? 1 : 0
 }
 
+# Sequences of length 3 (ABA)
 function process_ssl(str) {
 	split(str, a, "")
 	if (a[1] == a[2]) return 0
@@ -29,10 +34,10 @@ function result(arr) {
 	for (k=1; k<=NF; k++) {
 		dbg(k ": " arr[k], 1)
 
-		if (even == 1) {
-			if (arr[k] == 1) return 0
+		if (even) {
+			if (arr[k]) return 0
 		} else {
-			if (arr[k] == 1) {
+			if (arr[k]) {
 				good = 1
 				dbg(arr[k] " is good (" k ")", 1)
 			}
@@ -57,7 +62,7 @@ function result(arr) {
 
 			dbg(j "\t" r "\t" substr($i, j, 4), 1)
 
-			if (r == 1) {
+			if (r) {
 				break
 			}
 
@@ -68,7 +73,7 @@ function result(arr) {
 			r = process_ssl(sstr)
 			dbg(sstr " [" r "] hypernet: " hypernet, 2)
 
-			if (r == 1) {
+			if (r) {
 				if (hypernet == 0)
 					c[i "_" m] = sstr
 				else
@@ -97,7 +102,7 @@ function result_ssl(super, hyper) {
 	for (aba in super) {
 		for (bab in hyper) {
 			dbg("super: " super[aba] " hyper: " hyper[bab], 2)
-			if (ababab(super[aba], hyper[bab]) == 1) {
+			if (ababab(super[aba], hyper[bab])) {
 				return 1
 			}
 		}
