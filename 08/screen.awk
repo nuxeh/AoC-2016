@@ -39,16 +39,16 @@ function rect(dimensions) {
 	width =  dims[1]
 	height = dims[2]
 	print "draw rectangle, width: " width " height: " height "\n"
-}
-
-function rotate(rowcol,n,amount) {
-	xy = substr(n,3,1)
-	print "rotate " rowcol ": " xy " by " amount "\n"
 	for (rx=1; rx<=width; ++rx) {
 		for (ry=1; ry<=height; ++ry) {
 			if (ispixel(rx,ry)) lcd[ry][rx] = 1
 		}
 	}
+}
+
+function rotate(rowcol,n,amount) {
+	xy = substr(n,3,1)
+	print "rotate " rowcol ": " xy " by " amount "\n"
 
 }
 
