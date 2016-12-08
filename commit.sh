@@ -1,3 +1,3 @@
 #!/bin/bash
-git ct -m "`date +%d`-$1: "
+git ct -m "`pwd -P | awk 'BEGIN{FS="/"}{print $NF}'`-`cat ./n`: "
 git ct --amend
