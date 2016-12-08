@@ -45,9 +45,15 @@ function rotate(rowcol,n,amount) {
 	xy = substr(n,3,1)
 	print "rotate " rowcol ": " xy " by " amount "\n"
 	for (rx=1; rx<=width; ++rx) {
-		for (ry=1; ry<=height; ++ry) lcd[ry][rx] = 1
+		for (ry=1; ry<=height; ++ry) {
+			if (ispixel(rx,ry)) lcd[ry][rx] = 1
+		}
 	}
 
+}
+
+function ispixel(x,y) {
+	return (x<=screen_width && x>0 && y<=screen_height && y>0) ? 1 : 0
 }
 
 END {
