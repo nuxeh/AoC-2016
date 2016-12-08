@@ -56,9 +56,8 @@ function rotate(rowcol,n,amount) {
 	if (rowcol == "row") {
 		for (col in lcd[xy]) x = x lcd[xy][col]
 		x = bin2dec(x)
-		print dec2bin(rshift(x,6), screen_width) "\n"
-		new_row = or(lshift(x,amount),rshift(x,(screen_width-amount)))
-		split(new_row, lcd[xy], "")
+		new_row = or(rshift(x,amount),lshift(x,(screen_width-amount)))
+		split(dec2bin(new_row,screen_width), lcd[xy], "")
 	}
 }
 
