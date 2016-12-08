@@ -21,6 +21,35 @@ BEGIN {
 	ORS=""
 }
 
+{
+	print $0 "\n"
+
+	# Indirect function calls
+	command = $1
+	switch(NF) {
+	case 2:
+		@command($2)
+	break
+	case 3:
+		@command($2,$3)
+	break
+	case 4:
+		@command($2,$3,$4)
+	break
+	}
+}
+
+function rect(dimensions) {
+	split(dimensions, dims, "x")
+	width =  dims[1]
+	height = dims[2]
+	print "draw rectangle, width: " width " height: " height "\n"
+}
+
+function rotate() {
+
+}
+
 END {
 	# Output visually
 	for (row in lcd) {
