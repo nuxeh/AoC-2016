@@ -22,19 +22,14 @@ BEGIN {
 }
 
 {
-	print $0 "\n"
-
 	# Indirect function calls
 	command = $1
 	switch(NF) {
 	case 2:
 		@command($2)
 	break
-	case 3:
-		@command($2,$3)
-	break
-	case 4:
-		@command($2,$3,$4)
+	case 5:
+		@command($2,$3,$5)
 	break
 	}
 }
@@ -46,7 +41,9 @@ function rect(dimensions) {
 	print "draw rectangle, width: " width " height: " height "\n"
 }
 
-function rotate() {
+function rotate(rowcol,n,amount) {
+	xy = substr(n,3,1)
+	print "rotate " rowcol ": " xy " by " amount "\n"
 
 }
 
