@@ -44,6 +44,9 @@ function rect(dimensions) {
 function rotate(rowcol,n,amount) {
 	xy = substr(n,3,1)
 	print "rotate " rowcol ": " xy " by " amount "\n"
+	for (rx=1; rx<=width; ++rx) {
+		for (ry=1; ry<=height; ++ry) lcd[ry][rx] = 1
+	}
 
 }
 
