@@ -53,11 +53,29 @@ function rotate(rowcol,n,amount) {
 
 	# Barrel shift
 	# y = (x << shift) | (x >> (width - shift));
+	x = ""
+
 	if (rowcol == "row") {
 		for (col in lcd[xy]) x = x lcd[xy][col]
 		x = bin2dec(x)
 		new_row = or(rshift(x,amount),lshift(x,(screen_width-amount)))
 		split(dec2bin(new_row,screen_width), lcd[xy], "")
+	}
+	else if (rowcol == "column") {
+		for (row in lcd) x = x lcd[row][xy]
+
+		print x "\n"
+
+		x = bin2dec(x)
+		new_col = or(rshift(x,amount),lshift(x,(screen_height-amount)))
+
+		print dec2bin(new_col,screen_height) "\n"
+
+		split(dec2bin(new_col,screen_height), new_col_a, "")
+		for (row in lcd) {
+			lcd[row][xy] = new_col_a[row]
+			print "row: " row " xy: " xy " val: " new_col_a[row] "\n"
+		}
 	}
 }
 
@@ -68,11 +86,15 @@ function ispixel(x,y) {
 END {
 	# Output visually
 	for (row in lcd) {
-		for (col in lcd[row]) print lcd[row][col];
+		for (col in lcd[row]) {
+			print lcd[row][col];
+			if (lcd[row][col]) count++
+		}
 		print "\n"
 	}
 
 	# Count of lit pixels
+	print "count of lit pixels: " count "\n"
 }
 
 # bin2dec(binary_string), returns decimal equivalent
@@ -91,7 +113,7 @@ function bin2dec(b,n,i,d) {
 
 # dec2bin(decimal_integer), returns the equivalent binary string
 # ex: dec2bin(202) -> 11001010
-function dec2bin(d,padwidth) {
+function dec2bin(d,padwidth,b) {
 	do {
 		b = "" d%2 b
 		d = int(d/2)
