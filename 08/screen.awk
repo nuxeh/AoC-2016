@@ -3,6 +3,8 @@
 BEGIN {
 	screen_width  = 7 # 50
 	screen_height = 3 # 6
+	screen_width  = 50
+	screen_height = 6
 
 	#         x=0123456
 	# lcd[1] = '0000000' # y=0
@@ -21,6 +23,9 @@ BEGIN {
 }
 
 {
+	# Comments begin with #
+	if (substr($1,1,1) == "#") next
+
 	# Indirect function calls
 	command = $1
 	switch(NF) {
@@ -31,6 +36,7 @@ BEGIN {
 		@command($2,$3,$5)
 	break
 	}
+	display()
 }
 
 function rect(dimensions) {
@@ -81,6 +87,13 @@ function rotate(rowcol,n,amount) {
 
 function ispixel(x,y) {
 	return (x<=screen_width && x>0 && y<=screen_height && y>0) ? 1 : 0
+}
+
+function display() {
+	for (row in lcd) {
+		for (col in lcd[row]) print lcd[row][col];
+		print "\n"
+	}
 }
 
 END {
