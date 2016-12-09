@@ -54,7 +54,8 @@ function rect(dimensions) {
 
 function rotate(rowcol,n,amount) {
 	# input is zero indexed
-	xy = substr(n,3,1) + 1
+	split(n, xy_a, "=")
+	xy = xy_a[2] + 1
 	print "rotate " rowcol ": " xy " by " amount "\n"
 
 	# Barrel shift
