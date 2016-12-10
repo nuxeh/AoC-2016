@@ -2,6 +2,7 @@
 
 BEGIN {
 	RS="\\([0-9]+x[0-9]+\\)"
+	#ORS="\n"
 }
 
 {
@@ -17,15 +18,8 @@ BEGIN {
 		m = a[2]
 	}
 
-	for (i=0; i <= length(rt_last); ++i)
-		string = substr
+	RS=""
 
-	for (i=0; i <= length($0); ++i)
-
-	if (characters_read == n)
-		section_done = 1
-
-	#if (length($0) < )
 
 	rt_last = RT
 }
