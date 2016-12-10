@@ -6,7 +6,7 @@ BEGIN {
 }
 
 {
-	print rt_last
+	print "rt_last: " rt_last
 	print $0
 
 	#if (rt_last == "") next
@@ -18,7 +18,7 @@ BEGIN {
 		m = a[2]
 	}
 
-	RS=""
+	RS="A"
 
 
 	rt_last = RT
