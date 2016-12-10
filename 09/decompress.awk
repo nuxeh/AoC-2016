@@ -1,7 +1,9 @@
 #!/usr/bin/awk -f
 
 BEGIN {
-	RS="\\([0-9]+x[0-9]+\\)"
+	rs_orig = "\\([0-9]+x[0-9]+\\)"
+	RS = rs_orig
+
 	#ORS="\n"
 }
 
@@ -18,8 +20,13 @@ BEGIN {
 		m = a[2]
 	}
 
-	RS="A"
+#	RS=".{,n}"
+#	print RS
+#	$0 = RT
+#	print $0
 
+	FS=".{,n}"
+	print $1
 
 	rt_last = RT
 }
