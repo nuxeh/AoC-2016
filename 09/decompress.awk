@@ -8,14 +8,22 @@ BEGIN {
 	print rt_last
 	print $0
 
-	rt_sub = gensub(/[\)\(]/, "", "g", rt_last)
-	print rt_sub
-	split(rt_sub, a, "x")
-	n = a[1]
-	print n
-	m = a[2]
-	print m
+	#if (rt_last == "") next
 
+	rt_sub = gensub(/[\)\(]/, "", "g", rt_last)
+	split(rt_sub, a, "x")
+	if (section_done) {
+		n = a[1]
+		m = a[2]
+	}
+
+	for (i=0; i <= length(rt_last); ++i)
+		string = substr
+
+	for (i=0; i <= length($0); ++i)
+
+	if (characters_read == n)
+		section_done = 1
 
 	#if (length($0) < )
 
