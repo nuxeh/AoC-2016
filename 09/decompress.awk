@@ -3,26 +3,23 @@
 BEGIN {
 	rs_orig = "\\([0-9]+x[0-9]+\\)"
 	RS = rs_orig
+
 	seq = 0
 	rt_last = ""
 
 	#ORS="\n"
+
+	if (substr(ARGV[1],1,2) == "D=") debug=substr(ARGV[1],3,1)
 }
 
 {
+	# Stash record sepatator text for next time
 	rt_last = RT
 
 	# Skip first record
-	if (rt_last == "") {
-		next
-	}
+	if (rt_last == "") next
 
-	print "rt_last: " rt_last
-	print $0
-
-	OFS = " "
-	ORS = "\n"
-	print "seq:", seq, "\trs:", RS, "\trt:", RT
+	dbg("seq: " seq "\trs: " RS "\trt: " RT, 1)
 
 	switch (seq) {
 	case 0:
@@ -44,11 +41,16 @@ BEGIN {
 		# Change to header regex RS (for next run)
 		RS = rs_orig
 
-
 	break
 	}
 
 	# Increment state
 	if (++seq == 2) seq = 0
 
+}
+
+function dbg(d_s, d_l, d_fs, d_rs) {
+	d_f=OFS;OFS=(d_fs) ? d_fs : " ";d_fs;d_r=ORS;ORS=(d_rs) ? d_rs : "\n";
+	if (debug==d_l) print d_s  > "/dev/stderr";
+	OFS=d_f; ORS=d_r;
 }
