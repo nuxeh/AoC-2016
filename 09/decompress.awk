@@ -10,9 +10,10 @@ BEGIN {
 }
 
 {
+	rt_last = RT
+
 	# Skip first record
 	if (rt_last == "") {
-		rt_last = RT
 		next
 	}
 
