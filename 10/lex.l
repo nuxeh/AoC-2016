@@ -53,7 +53,7 @@ value |
 output		{ return IDENTIFIER; }
 low |
 high		{ return LOWHIGH; }
-[0-9]+		{ return NUM; }
+[0-9]+		{ yylval = atoi(yytext); return NUM; }
 
 .		{ /* ignore anything else */ }
 \n		{ ECHO; }

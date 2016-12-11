@@ -35,7 +35,7 @@ command:
 val_assign:
 	IDENTIFIER NUM IDENTIFIER NUM
 	{
-		printf("found value assignment\n");
+		printf("found value assignment, %d to bot %d\n", $2, $4);
 	}
 	;
 
