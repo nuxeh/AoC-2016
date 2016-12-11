@@ -6,6 +6,7 @@
 # - Character length regex matching
 #
 # TODO: Do as an awk one-liner
+# TODO: Proper handling of v2 compression format
 
 BEGIN {
 	rs_orig = "\\([0-9]+x[0-9]+\\)"
