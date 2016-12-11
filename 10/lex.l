@@ -3,6 +3,8 @@
  * Parse the list of instructions
  */
 
+#include "yacc.tab.h"
+
 int pass = 0;
 
 struct bot {
@@ -39,25 +41,30 @@ int bot_remove(int bot_n, int chip_n)
 {
 
 }
+
 %}
+
 
 %%
 [\t ]+		/* ignore whitespace */ ;
 
 bot |
 value |
-output		{ printf("%s:\tfound specifier\n", yytext); }
+output		{ return IDENTIFIER; }
 low |
-high		{ printf("%s:\tfound lowhigh\n", yytext); }
-[0-9]+		{ printf("%s:\tfound number\n", yytext); }
-.		{ /* normal default anyway */ }
+high		{ return LOWHIGH; }
+[0-9]+		{ return NUM; }
+
+.		{ /* ignore anything else */ }
 \n		{ ECHO; }
 %%
 
+/*
 int main()
 {
 	bot_list = (struct bot *)malloc(sizeof(struct bot));
 
-	yylex();
+	yyparse();
 	free(bot_list);
 }
+*/

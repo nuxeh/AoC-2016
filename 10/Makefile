@@ -1,10 +1,13 @@
-all: lexfiles binaries
+all: bison lexfiles binaries
 
-lexfiles: lex.yy.c
+lexfiles: yacc.tab.h
 	flex lex.l
 
-binaries: bots
-	gcc -o bots lex.yy.c -lfl
+bison:
+	bison -d yacc.y
+
+binaries: lex.yy.c yacc.tab.c
+	gcc -o bots lex.yy.c yacc.tab.c -lfl
 
 run:
 	cat test | ./bots
