@@ -9,8 +9,8 @@
 # TODO: Proper handling of v2 compression format
 
 BEGIN {
-	rs_orig = "\\([0-9]+x[0-9]+\\)"
-	RS = rs_orig
+	RS_MARKER = "\\([0-9]+x[0-9]+\\)"
+	RS = RS_MARKER
 
 	seq = 0
 	RT_LAST = ""
@@ -27,7 +27,7 @@ BEGIN {
 	# Skip first record
 	if (RT_LAST == "") next
 
-	dbg("seq: " seq "\trs: " RS "\trt: " RT "$0: " $0 "\n", 1)
+	dbg("seq: " seq "\trs: " RS "\trt: " RT " $0: " $0 "\n", 1)
 
 	switch (seq) {
 	case 0: #### HEADER ####
@@ -58,7 +58,7 @@ BEGIN {
 		}
 
 		# Change to header regex RS (for next run)
-		RS = rs_orig
+		RS = RS_MARKER
 
 	break
 	}
