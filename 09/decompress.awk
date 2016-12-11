@@ -40,7 +40,8 @@ BEGIN {
 
 		# $0 is remaining characters
 		dbg($0 RT_LAST, 2)
-		print $0 RT_LAST
+		print $0
+		count += length($0)
 
 		# Change to fixed length RS (for next run)
 		rs_new=".{" n "}"
@@ -50,7 +51,10 @@ BEGIN {
 	case 1: #### CONTENT ####
 
 		dbg(RT, 2)
-		for (o=0; o<m; ++o) print RT
+		for (o=0; o<m; ++o) {
+			print RT
+			count += length(RT)
+		}
 
 		# Change to header regex RS (for next run)
 		RS = rs_orig
@@ -64,6 +68,7 @@ BEGIN {
 
 END {
 	dbg("\n", 2)
+	dbg(count " characters decompressed\n", 3)
 }
 
 function dbg(d_s, d_l, d_rs, d_fs) {
