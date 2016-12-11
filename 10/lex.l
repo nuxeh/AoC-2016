@@ -51,12 +51,12 @@ int bot_remove(int bot_n, int chip_n)
 bot |
 value |
 output		{ return IDENTIFIER; }
-low |
-high		{ return LOWHIGH; }
+low |		/* { return LOW; } */
+high		{ yylval = !strcmp(yytext,"high"); return LOWHIGH; }
 [0-9]+		{ yylval = atoi(yytext); return NUM; }
 
 .		{ /* ignore anything else */ }
-\n		{ ECHO; }
+\n		{ }
 %%
 
 /*
