@@ -1,3 +1,4 @@
 *.c
 a.out
 bots
+*.h
