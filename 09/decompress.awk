@@ -1,4 +1,10 @@
 #!/usr/bin/awk -f
+#
+# Demonstrates:
+# - On-the-fly RS changes
+# - RT
+# - Character length regex matching
+#
 # TODO: Do as an awk one-liner
 
 BEGIN {
@@ -20,7 +26,7 @@ BEGIN {
 	# Skip first record
 	if (RT_LAST == "") next
 
-	dbg("seq: " seq "\trs: " RS "\trt: " RT "\n", 1)
+	dbg("seq: " seq "\trs: " RS "\trt: " RT "$0: " $0 "\n", 1)
 
 	switch (seq) {
 	case 0: #### HEADER ####
@@ -32,7 +38,8 @@ BEGIN {
 		n = a[1]
 		m = a[2]
 
-		dbg(RT_LAST, 2)
+		# $0 is remaining characters
+		dbg($0 RT_LAST, 2)
 		print RT_LAST
 
 		# Change to fixed length RS (for next run)
