@@ -10,11 +10,13 @@ int pass = 0;
 [\t ]+		/* ignore whitespace */ ;
 
 bot |
-value		{ printf("%s: found specifier\n", yytext); }
+value |
+output		{ printf("%s:\tfound specifier\n", yytext); }
 low |
-high		{ printf("%s: found lowhigh\n", yytext); }
-[0-9]+		{ printf("%s: number\n", yytext); }
-.|\n		{ /* normal default anyway */ }
+high		{ printf("%s:\tfound lowhigh\n", yytext); }
+[0-9]+		{ printf("%s:\tfound number\n", yytext); }
+.		{ /* normal default anyway */ }
+\n		{ ECHO; }
 %%
 
 int main()
