@@ -5,3 +5,6 @@ lexfiles: lex.yy.c
 
 binaries: bots
 	gcc -o bots lex.yy.c -lfl
+
+run:
+	cat test | ./bots
