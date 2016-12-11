@@ -40,7 +40,7 @@ BEGIN {
 
 		# $0 is remaining characters
 		dbg($0 RT_LAST, 2)
-		print RT_LAST
+		print $0 RT_LAST
 
 		# Change to fixed length RS (for next run)
 		rs_new=".{" n "}"
@@ -50,7 +50,7 @@ BEGIN {
 	case 1: #### CONTENT ####
 
 		dbg(RT, 2)
-		for (o=0; o<n; ++o) print RT
+		for (o=0; o<m; ++o) print RT
 
 		# Change to header regex RS (for next run)
 		RS = rs_orig
@@ -60,6 +60,10 @@ BEGIN {
 
 	# Increment state
 	if (++seq == 2) seq = 0
+}
+
+END {
+	dbg("\n", 2)
 }
 
 function dbg(d_s, d_l, d_rs, d_fs) {
