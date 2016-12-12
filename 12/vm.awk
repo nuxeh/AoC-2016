@@ -11,22 +11,23 @@ BEGIN {
 
 {
 	print $0 "\n"
+	print "t" target_pc " p" pc "\n"
+
+	if (target_pc < pc) {
+		do {
+			$0 = cache[target_pc]
+			print "> " $0 "\n"
+			instruction()
+		} while (target_pc < pc)
+		print "break out\n"
+		$0 = cache[pc]
+	}
 
 	cache[pc] = $0
 
 	if (target_pc > pc) {
 		++pc
 		next
-	}
-
-	if (target_pc < pc) {
-		do {
-			print "t" target_pc " p" pc "\n"
-			$0 = cache[target_pc]
-			print "> " $0 "\n"
-			instruction()
-		} while (target_pc < pc)
-		$0 = cache[pc]
 	}
 
 	instruction()
@@ -45,10 +46,10 @@ function instruction() {
 	break
 	}
 
-	print "| pc " pc
+	print "pc " pc " |"
 	for (r in registers)
 		print " " r " " registers[r]
-	print " |\n"
+	print " | tpc " target_pc "\n"
 	print_cache()
 }
 
