@@ -78,5 +78,7 @@ floors[3].add_item(Item(2,2))
 
 
 
-display()
+while true:
+	elevator.add_item
+	display()
 
