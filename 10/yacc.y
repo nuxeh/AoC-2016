@@ -39,7 +39,7 @@ int add_bot(int n)
 int bot_add(int bot_n, int chip_n)
 {
 	printf("> adding bot\t\t%d, highest: %d\n", bot_n, highest_bot);
-	if (highest_bot < bot_n)
+	if (bot_list[bot_n] == NULL)
 		add_bot(bot_n);
 }
 
@@ -63,7 +63,7 @@ int yywrap()
 
 int main()
 {
-	bot_list = (struct bot *)malloc(sizeof(struct bot));
+	bot_list = calloc(sizeof(struct bot));
         yyparse();
 }
 
