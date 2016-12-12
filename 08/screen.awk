@@ -104,8 +104,12 @@ END {
 	# Output visually
 	for (row in lcd) {
 		for (col in lcd[row]) {
-			print lcd[row][col];
-			if (lcd[row][col]) count++
+			if (lcd[row][col]) {
+				count++
+				print "#";
+			} else {
+				print " "
+			}
 		}
 		print "\n"
 	}
