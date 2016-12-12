@@ -47,10 +47,12 @@ function instruction() {
 	++pc
 }
 
-function inc(reg)	{ registers[reg]++ }
-function dec(reg)	{ registers[reg]-- }
-function cpy(n, reg)	{ registers[reg] = n }
-function jnz(cond, n)	{ if (cond != 0) jump = n }
+function inc(reg)	{ registers[reg]++;	++target_pc }
+function dec(reg)	{ registers[reg]--;	++target_pc }
+function cpy(n, reg)	{
+	registers[reg] = (match(n, /[0-9]+/)) ? n : registers[n]; ++target_pc
+}
+function jnz(cond, n)	{ if (cond != 0) target_pc = pc + n }
 
 END {
 	print "reg a = " registers["a"] "\n"
