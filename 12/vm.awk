@@ -25,7 +25,7 @@ BEGIN {
 			$0 = cache[target_pc]
 			print "> " $0 "\n"
 			instruction()
-		} while (++target_pc < pc)
+		} while (target_pc < pc)
 		$0 = cache[pc]
 	}
 
@@ -49,6 +49,7 @@ function instruction() {
 	for (r in registers)
 		print " " r " " registers[r]
 	print " |\n"
+	print_cache()
 }
 
 function inc(reg)	{ registers[reg]++;	++target_pc }
@@ -57,6 +58,11 @@ function cpy(n, reg)	{
 	registers[reg] = (match(n, /[0-9]+/)) ? n : registers[n]; ++target_pc
 }
 function jnz(cond, n)	{ if (cond != 0) target_pc = pc + n }
+
+function print_cache() {
+	for (i in cache)
+		print ">> i " i "\t| " cache[i] "\n"
+}
 
 END {
 	print "reg a = " registers["a"] "\n"
