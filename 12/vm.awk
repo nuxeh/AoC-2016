@@ -1,6 +1,7 @@
 #!/usr/bin/awk -f
 
 # TODO: lex
+# TODO: verilog?
 
 BEGIN {
 	jump = 1
@@ -11,21 +12,25 @@ BEGIN {
 {
 	print $0 "\n"
 
-	if (jump > 1) {
-		cache[pc] = $0
+	cache[pc] = $0
+
+	if (target_pc > pc) {
 		++pc
-		--jump
 		next
 	}
 
-	if (jump < 0) {
-		$0 = cache[pc - jump]
-		pc = pc - jump
-		jump++
+	if (target_pc < pc) {
+		do {
+			print "t" target_pc " p" pc "\n"
+			$0 = cache[target_pc]
+			print "> " $0 "\n"
+			instruction()
+		} while (++target_pc < pc)
+		$0 = cache[pc]
 	}
-		
 
 	instruction()
+	++pc
 }
 
 function instruction() {
@@ -44,7 +49,6 @@ function instruction() {
 	for (r in registers)
 		print " " r " " registers[r]
 	print " |\n"
-	++pc
 }
 
 function inc(reg)	{ registers[reg]++;	++target_pc }
