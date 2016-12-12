@@ -1,5 +1,7 @@
 #!/usr/bin/awk -f
 
+# Would be nice to re-implement this in lex/yacc
+
 BEGIN {
 	screen_width  = 7 # 50
 	screen_height = 3 # 6
@@ -36,7 +38,8 @@ BEGIN {
 		@command($2,$3,$5)
 	break
 	}
-	display()
+
+	if (debug) display()
 }
 
 function rect(dimensions) {
