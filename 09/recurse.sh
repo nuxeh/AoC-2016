@@ -21,3 +21,5 @@ while true; do
 	LOOP=$((LOOP+1))
 done
 
+# This method still fills all memory and swap, topped out at around 12.2G
+# before giving up

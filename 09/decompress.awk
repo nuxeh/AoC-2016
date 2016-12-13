@@ -51,6 +51,7 @@ BEGIN {
 
 		dbg(RT, 2)
 		for (o=0; o<mm; ++o) {
+			dbg("mmm: " mmm "\n", 4)
 			process_markers(RT)
 			#print RT
 			#count += length(RT)
@@ -90,11 +91,13 @@ function process_markers(data) {
 		match(data, RS_MARKER)
 		marker_str = substr(data, RSTART, RLENGTH)
 
-		dbg(data "\n", 4)
+		dbg("data: " data "\n", 4)
 		dbg("RLENGTH: " RLENGTH " sub: " marker_str "\n", 4)
 
-		if (RLENGTH == -1) # Finished
+		if (RLENGTH == -1) { # Finished
+			print data
 			break
+		}
 
 		print substr(data, 0, RSTART - 1) # Ouput characters to the left
 		get_marker(marker_str)
@@ -103,6 +106,7 @@ function process_markers(data) {
 		for (j=0; j<mmm; ++j) {
 			dbg("j: " j "\n", 4)
 			print substr(data, RSTART + RLENGTH, nnn)
+			process_markers(data)
 		}
 
 		data = substr(data, RSTART + RLENGTH + nnn)
