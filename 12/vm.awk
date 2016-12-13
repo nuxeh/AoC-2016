@@ -5,33 +5,23 @@
 
 BEGIN {
 	jump = 1
-	pc = 0
+	pc = 1
 	ORS = ""
 }
 
 {
-	print $0 "\n"
-	print "t" target_pc " p" pc "\n"
+	print NR " " $0 "\n"
+	cache[NR] = $0
+}
 
-	if (target_pc < pc) {
-		do {
-			$0 = cache[target_pc]
-			print "> " $0 "\n"
-			instruction()
-		} while (target_pc < pc)
-		print "break out\n"
+END {
+	do {
 		$0 = cache[pc]
-	}
+		print $0 "\n"
+		instruction()
+	} while (pc < NR)
 
-	cache[pc] = $0
-
-	if (target_pc > pc) {
-		++pc
-		next
-	}
-
-	instruction()
-	++pc
+	print "reg a = " registers["a"] "\n"
 }
 
 function instruction() {
@@ -46,25 +36,34 @@ function instruction() {
 	break
 	}
 
-	print "pc " pc " |"
-	for (r in registers)
-		print " " r " " registers[r]
-	print " | tpc " target_pc "\n"
+	print_state()
 	print_cache()
 }
 
-function inc(reg)	{ registers[reg]++;	++target_pc }
-function dec(reg)	{ registers[reg]--;	++target_pc }
+# Instructions ###############################################################
+function inc(reg)	{ registers[reg]++; pc++ }
+function dec(reg)	{ registers[reg]--; pc++ }
 function cpy(n, reg)	{
-	registers[reg] = (match(n, /[0-9]+/)) ? n : registers[n]; ++target_pc
+	registers[reg] = (match(n, /[0-9]+/)) ? n : registers[n]; pc++
 }
-function jnz(cond, n)	{ if (cond != 0) target_pc = pc + n }
+function jnz(cond, n)	{ cond = (match(cond, /[0-9]+/)) ? cond : registers[cond];
+			  pc = (cond != 0) ? pc + n : pc + 1;
+			  print ">>>>>" cond "\n" }
+##############################################################################
 
 function print_cache() {
-	for (i in cache)
-		print ">> i " i "\t| " cache[i] "\n"
+	for (i in cache) {
+		if (i == pc)
+			print "*"
+		else
+			print " "
+		print "| i " i "\t| " cache[i] "\n"
+	}
 }
 
-END {
-	print "reg a = " registers["a"] "\n"
+function print_state() {
+	print "pc " pc " |"
+	for (r in registers)
+		print " " r " " registers[r]
+	print " |\n"
 }
