@@ -1,7 +1,7 @@
 all: cubicles
 
-cubicles:
+cubicles: find.o
 	gcc find.c -o cubicles
 
-run:
+run: cubicles
 	./cubicles
