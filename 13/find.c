@@ -15,6 +15,8 @@
 #define DEBUG(...)
 #endif
 
+void display();
+
 char num2bin(int num, char *out) {
 	char *bitvalue;
 	char count;
@@ -64,8 +66,12 @@ int main(void)
 			DEBUG("x: %d y: %d\tres: %d "
                               "bin: \t%s count: %d even: %d\n",
 			      x, y, res, bin, count, even);
+
+			buffer[(y * WIDTH) + x] = even;
 		}
 	}
+
+	display();
 
 	free(buffer);
 
@@ -73,5 +79,15 @@ int main(void)
 
 void display()
 {
+	int x, y;
 
+	for (y=0; y<HEIGHT; y++) {
+		for (x=0; x<WIDTH; x++) {
+			if (buffer[(y*WIDTH)+x] == 1)
+				DEBUG("#");
+			else
+				DEBUG(" ");
+		}
+		DEBUG("\n");
+	}
 }
