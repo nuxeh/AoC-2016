@@ -19,7 +19,7 @@ END {
 		$0 = cache[pc]
 		print $0 "\n"
 		instruction()
-	} while (pc < NR)
+	} while (pc <= NR)
 
 	print "reg a = " registers["a"] "\n" > "/dev/stderr"
 }
