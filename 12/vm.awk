@@ -21,7 +21,7 @@ END {
 		instruction()
 	} while (pc < NR)
 
-	print "reg a = " registers["a"] "\n"
+	print "reg a = " registers["a"] "\n" > "/dev/stderr"
 }
 
 function instruction() {
