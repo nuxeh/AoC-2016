@@ -46,9 +46,10 @@ function dec(reg)	{ registers[reg]--; pc++ }
 function cpy(n, reg)	{
 	registers[reg] = (match(n, /[0-9]+/)) ? n : registers[n]; pc++
 }
-function jnz(cond, n)	{ cond = (match(cond, /[0-9]+/)) ? cond : registers[cond];
-			  pc = (cond != 0) ? pc + n : pc + 1;
-			  print ">>>>>" cond "\n" }
+function jnz(cond, n)	{
+	cond = (match(cond, /[0-9]+/)) ? cond : registers[cond];
+	pc = (cond != 0) ? pc + n : pc + 1;
+}
 ##############################################################################
 
 function print_cache() {
