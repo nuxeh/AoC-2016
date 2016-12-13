@@ -10,9 +10,9 @@
 #endif
 
 #if 1
-#define DEBUG(s,f) printf(s,f)
+#define DEBUG(...) fprintf(stderr, __VA_ARGS__)
 #else
-#define DEBUG(s,f)
+#define DEBUG(...)
 #endif
 
 char num2bin(int num, char *out) {
@@ -25,7 +25,7 @@ char num2bin(int num, char *out) {
 	unsigned int bit;
 	for (bit = pow(2, 31); bit > 0; bit >>= 1) {
 		bitvalue = ((num & bit) == bit) ? "1" : "0";
-		DEBUG("bit: %u\n", bit);
+		//DEBUG("bit: %u\n", bit);
 
 		strcat(out, bitvalue);
 
@@ -38,6 +38,10 @@ char num2bin(int num, char *out) {
 	return count;
 }
 
+#define WIDTH  80
+#define HEIGHT 40
+
+static char *buffer;
 
 int main(void)
 {
@@ -45,18 +49,29 @@ int main(void)
 	int y;
 	int res;
 	char bin[32];
-	char count;
+	char count, even;
 
-	for (x=0; x<80; x++) {
-		for (y=0; y<40; y++) {
+	buffer = calloc(WIDTH * HEIGHT, sizeof(char));
+
+	for (x=0; x<WIDTH; x++) {
+		for (y=0; y<HEIGHT; y++) {
 			res = (x * x) + (3 * x) + (2 * x * y) + y + (y * y);
 			res += FAVENUM;
 
 			count = num2bin(res, bin);
-			DEBUG("count: %d even: %d\n", count, count % 2);
+			even = !(count % 2);
 
-			printf("x: %d y: %d res: %d bin: %s\n", x, y, res, bin);
+			DEBUG("x: %d y: %d\tres: %d "
+                              "bin: \t%s count: %d even: %d\n",
+			      x, y, res, bin, count, even);
 		}
 	}
+
+	free(buffer);
+
+}
+
+void display()
+{
 
 }
