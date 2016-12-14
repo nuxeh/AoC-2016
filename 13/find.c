@@ -132,6 +132,7 @@ typedef enum {
 	RIGHT
 } direction;
 
+const char *dir_str[5] = {"^", ".", "<", ">"};
 
 
 void solve_path() {
