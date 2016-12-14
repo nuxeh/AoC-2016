@@ -3,9 +3,9 @@
 #include <string.h>
 #include <math.h>
 
-#if 0
-#define WIDTH  80
-#define HEIGHT 40
+#if 1
+#define WIDTH    80
+#define HEIGHT   80
 #define FAVENUM  1350
 #define FINISH_X 31
 #define FINISH_Y 39
@@ -28,6 +28,7 @@
 
 void display();
 void solve_path();
+char get_dof(char x, char y);
 
 char num2bin(int num, char *out) {
 	char *bitvalue;
@@ -83,7 +84,17 @@ int main(void)
 		}
 	}
 
-	solve_path();
+	/* add degrees of freedom */
+	int xx, yy;
+	for (xx=0; xx<WIDTH; xx++) {
+		for (yy=0; yy<HEIGHT; yy++) {
+			if (buffer[(yy * WIDTH) + xx] == 1) {
+				buffer[(yy * WIDTH) + xx] = get_dof(xx, yy) + 2;
+			}
+		}
+	}
+
+	//solve_path();
 	display();
 	free(buffer);
 
@@ -93,6 +104,7 @@ void display()
 {
 	int x, y;
 	char chars[4] = {0};
+	int val;
 
 	/* print top (x) coordinates */
 	DEBUG("   ");
@@ -112,14 +124,17 @@ void display()
 	for (y=0; y<HEIGHT; y++) {
 		DEBUG("%02d ", y);
 		for (x=0; x<WIDTH; x++) {
-			if (buffer[(y*WIDTH)+x] == 7)
+			val = buffer[(y*WIDTH)+x];
+			if (val == 7)
 				DEBUG("*");
 			else if (x == START_X && y == START_Y)
 				DEBUG("S");
 			else if (x == FINISH_X && y == FINISH_Y)
 				DEBUG("F");
-			else if (buffer[(y*WIDTH)+x] == 0)
+			else if (val == 0 || val == 2)
 				DEBUG("#");
+			else if (val > 2 && val < 7)
+				DEBUG("%d", val - 2);
 			else
 				DEBUG(" ");
 		}
@@ -143,6 +158,9 @@ void solve_path() {
 	char x, y;
 	char i, dof;
 	static char *buf_copy;
+	static char recheck_x[1000] = {0};
+	static char recheck_y[1000] = {0};
+	char recheck_count;
 
 	x = START_X;
 	y = START_Y;
@@ -178,10 +196,45 @@ void solve_path() {
 			}
 		//}
 
+
 		DEBUG("dof: %d\n", dof);
+		if (dof > 0) {
+			recheck_count++;
+			recheck_x[recheck_count] = x;
+			recheck_y[recheck_count] = y;
+		}
+
+		if (recheck_count == 1000) {
+			printf("re-check space exceeded!");
+			exit(1);
+		}
 
 		break;
 
 	} while (x != FINISH_X && y != FINISH_Y);
 
+}
+
+char get_dof(char x, char y)
+{
+	char dof;
+
+	dof = 0;
+	/* can move up */
+	if (y > 1 && buffer[((y-1)*WIDTH)+x] == 1) {
+		dof++;
+	}
+	/* can move down */
+	if (y < HEIGHT && buffer[((y+1)*WIDTH)+x] == 1) {
+		dof++;
+	}
+	/* can move left */
+	if (x > 0 && buffer[(y*WIDTH)+x-1] == 1) {
+		dof++;
+	}
+	/* can move right */
+	if (x < WIDTH && buffer[(y*WIDTH)+x+1] == 1) {
+		dof++;
+	}
+	return dof;
 }
