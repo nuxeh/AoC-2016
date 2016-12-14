@@ -4,8 +4,8 @@ import sys
 import re
 
 def dump_keys():
-    for key in key_first:
-        print str(key) + ": " + key_first[key][0] + " " + key_first[key][1]
+    for key in sorted(key_first):
+        print str(key) + ":\t" + key_first[key][0] + " " + key_first[key][1]
 
 #input = 'ahsbgdzn'
 input = 'abc'
@@ -38,6 +38,7 @@ while True:
                       str(key)) + " num: " + str(num))
                 print str(keys_found) + " keys found"
                 dump_keys()
+                break
 
             raw_input()
 
