@@ -11,7 +11,7 @@
 #define FINISH_Y 39
 #else
 #define WIDTH    10
-#define HEIGHT   6
+#define HEIGHT   7
 #define FAVENUM  10
 #define FINISH_X 7
 #define FINISH_Y 4
@@ -105,7 +105,7 @@ void display()
 	for (y=0; y<HEIGHT; y++) {
 		DEBUG("%02d ", y);
 		for (x=0; x<WIDTH; x++) {
-			if (buffer[(y*WIDTH)+x] == 1)
+			if (buffer[(y*WIDTH)+x] == 0)
 				DEBUG("#");
 			else
 				DEBUG(" ");
