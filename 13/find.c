@@ -102,10 +102,15 @@ void display()
 	}
 	DEBUG("\n");
 
+	/* print left (y) coordinates and map */
 	for (y=0; y<HEIGHT; y++) {
 		DEBUG("%02d ", y);
 		for (x=0; x<WIDTH; x++) {
-			if (buffer[(y*WIDTH)+x] == 0)
+			if (x == 1 && y == 1)
+				DEBUG("S");
+			else if (x == FINISH_X && y == FINISH_Y)
+				DEBUG("F");
+			else if (buffer[(y*WIDTH)+x] == 0)
 				DEBUG("#");
 			else
 				DEBUG(" ");
