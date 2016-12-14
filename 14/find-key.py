@@ -3,6 +3,10 @@ import md5
 import sys
 import re
 
+def dump_keys():
+    for key in key_first:
+        print str(key) + ": " + key_first[key][0] + " " + key_first[key][1]
+
 #input = 'ahsbgdzn'
 input = 'abc'
 num = 0
@@ -24,35 +28,21 @@ while True:
     key_parts_3 = [match.group() for match in rep_re_3.finditer(hex_string)]
     key_parts_5 = [match.group() for match in rep_re_5.finditer(hex_string)]
 
-    for index, part in enumerate(key_parts_3):
-	print seed
-	print hex_string
-	print str(index) + ": " + part
-
-	key_first[num] = (hex_string, part);
-
     for index, part in enumerate(key_parts_5):
-	print seed
-	print hex_string
-	print str(index) + ": " + part
-
-	for key in key_first:
-            print part
-            print part[0:3]
-            print key_first[key][1]
-            print
-            print key
-            print key_first[key]
-            print
-            print num
-
+	for key in sorted(key_first):
 	    if key_first[key][1] == part[0:3]:
-                keys_found += 1 
+                print "original  " + hex_string
+
+                keys_found += 1
                 print("found key " + key_first[key][0] + " at " + str(input +
                       str(key)) + " num: " + str(num))
                 print str(keys_found) + " keys found"
+                dump_keys()
 
             raw_input()
+
+    for index, part in enumerate(key_parts_3):
+	key_first[num] = (hex_string, part);
 
     num += 1
 
