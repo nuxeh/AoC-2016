@@ -4,9 +4,17 @@
 #include <math.h>
 
 #if 0
-#define FAVENUM 1350
+#define WIDTH  80
+#define HEIGHT 40
+#define FAVENUM  1350
+#define FINISH_X 31
+#define FINISH_Y 39
 #else
-#define FAVENUM 10
+#define WIDTH    10
+#define HEIGHT   6
+#define FAVENUM  10
+#define FINISH_X 7
+#define FINISH_Y 4
 #endif
 
 #if 1
@@ -40,8 +48,6 @@ char num2bin(int num, char *out) {
 	return count;
 }
 
-#define WIDTH  80
-#define HEIGHT 40
 
 static char *buffer;
 
@@ -80,8 +86,24 @@ int main(void)
 void display()
 {
 	int x, y;
+	char chars[4] = {0};
+
+	/* print top (x) coordinates */
+	DEBUG("   ");
+	for  (x=0; x<WIDTH; x++) {
+		snprintf(chars, 4, "%02d", x);
+		DEBUG("%c", chars[0]);
+
+	}
+	DEBUG("\n   ");
+	for  (x=0; x<WIDTH; x++) {
+		snprintf(chars, 4, "%02d", x);
+		DEBUG("%c", chars[1]);
+	}
+	DEBUG("\n");
 
 	for (y=0; y<HEIGHT; y++) {
+		DEBUG("%02d ", y);
 		for (x=0; x<WIDTH; x++) {
 			if (buffer[(y*WIDTH)+x] == 1)
 				DEBUG("#");
