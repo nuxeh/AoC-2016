@@ -112,7 +112,9 @@ void display()
 	for (y=0; y<HEIGHT; y++) {
 		DEBUG("%02d ", y);
 		for (x=0; x<WIDTH; x++) {
-			if (x == 1 && y == 1)
+			if (buffer[(y*WIDTH)+x] == 7)
+				DEBUG("*");
+			else if (x == START_X && y == START_Y)
 				DEBUG("S");
 			else if (x == FINISH_X && y == FINISH_Y)
 				DEBUG("F");
@@ -126,7 +128,7 @@ void display()
 }
 
 typedef enum {
-	UP,
+	UP = 2,
 	DOWN,
 	LEFT,
 	RIGHT
@@ -139,11 +141,45 @@ void solve_path() {
 
 	char path;
 	char x, y;
+	char i, dof;
+	static char *buf_copy;
 
 	x = START_X;
 	y = START_Y;
 
+	/* copy the buffer */
+	buf_copy = calloc(WIDTH * HEIGHT, sizeof(char));
+	memcpy(buf_copy, (void *)buffer, WIDTH * HEIGHT);
+
 	do {
+
+		/* look for possible movements */
+		dof = 0;
+		//for (i = 0; i < 4; i++) {
+			/* can move up */
+			if (y <= 0 && buf_copy[((y-1)*WIDTH)+x] == 1) {
+				buffer[((y-1)*WIDTH)+x] = 7;
+				dof++;
+			}
+			/* can move down */
+			if (y <= HEIGHT && buf_copy[((y+1)*WIDTH)+x] == 1) {
+				buffer[((y+1)*WIDTH)+x] = 7;
+				dof++;
+			}
+			/* can move left */
+			if (x >= 0 && buf_copy[(y*WIDTH)+x-1] == 1) {
+				buffer[(y*WIDTH)+(x-1)] = 7;
+				dof++;
+			}
+			/* can move right */
+			if (x <= WIDTH && buf_copy[(y*WIDTH)+x+1] == 1) {
+				buffer[(y*WIDTH)+(x+1)] = 7;
+				dof++;
+			}
+		//}
+
+		DEBUG("dof: %d\n", dof);
+
 		break;
 
 	} while (x != FINISH_X && y != FINISH_Y);
