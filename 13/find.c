@@ -17,6 +17,9 @@
 #define FINISH_Y 4
 #endif
 
+#define START_X 1
+#define START_Y 1
+
 #if 1
 #define DEBUG(...) fprintf(stderr, __VA_ARGS__)
 #else
@@ -24,6 +27,7 @@
 #endif
 
 void display();
+void solve_path();
 
 char num2bin(int num, char *out) {
 	char *bitvalue;
@@ -69,16 +73,18 @@ int main(void)
 			count = num2bin(res, bin);
 			even = !(count % 2);
 
+#ifdef MORE_DEBUG
 			DEBUG("x: %d y: %d\tres: %d "
                               "bin: \t%s count: %d even: %d\n",
 			      x, y, res, bin, count, even);
+#endif
 
 			buffer[(y * WIDTH) + x] = even;
 		}
 	}
 
+	solve_path();
 	display();
-
 	free(buffer);
 
 }
@@ -117,4 +123,28 @@ void display()
 		}
 		DEBUG("\n");
 	}
+}
+
+typedef enum {
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT
+} direction;
+
+
+
+void solve_path() {
+
+	char path;
+	char x, y;
+
+	x = START_X;
+	y = START_Y;
+
+	do {
+		break;
+
+	} while (x != FINISH_X && y != FINISH_Y);
+
 }
