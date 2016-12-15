@@ -25,6 +25,11 @@ while True:
     m.update(input + str(num))
     hex_string = m.hexdigest()
 
+    for n in xrange(1, 2016):
+        m = md5.new()
+        m.update(hex_string)
+        hex_string = m.hexdigest()
+
     key_parts_3 = [match.group() for match in rep_re_3.finditer(hex_string)]
     key_parts_5 = [match.group() for match in rep_re_5.finditer(hex_string)]
 
@@ -35,7 +40,7 @@ while True:
         found_keys_3.append((hex_string, key_parts_3[0], num));
 
     num += 1
-    if (num == 100000):
+    if (num == 10):
         break
 
 
