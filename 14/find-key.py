@@ -14,7 +14,7 @@ def dump_keys_found():
         print str(key) + ":\t" + found_keys[key]
 
 input = 'ahsbgdzn'
-#input = 'abc'
+input = 'abc'
 num = 0
 count = 0
 
@@ -41,7 +41,7 @@ while True:
             hash_str  = key_first[key][0]
             match     = key_first[key][1]
 
-            if match == part[0:3] and (num - key) < 1000:
+            if match == part[0:3] and (num - key) <= 1000:
                 print "original  " + hex_string + " diff: " + str(num - key)
 
                 keys_found += 1
@@ -51,6 +51,10 @@ while True:
 
                 print str(keys_found) + " keys found " + str(len(found_keys)) 
 
+		if key in found_keys.keys():
+                    print "dupe!!"
+                    #found_keys[str(key) + "_"] = hash_str
+		#else:
                 found_keys[key] = hash_str
 
                 #dump_keys()
