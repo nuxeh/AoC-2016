@@ -3,6 +3,17 @@
  * Parse the list of disc positions
  */
 
+/* lexing pass */
+char pass = 0;
+/* pass	function
+ * 0	count defined discs (lines in file), assign memory
+ * 1	create disc structures, process
+ */
+
+int yywrap()
+{
+        return 1;
+}
 
 
 %}
