@@ -4,6 +4,7 @@
  */
 
 void update(char data);
+void display(void);
 
 #if 0
 /* lexing pass */
@@ -24,7 +25,7 @@ static char seq;
 
 struct disc {
 	char positions;
-	char position;
+	char pos;
 };
 
 static char disc_index;
@@ -54,6 +55,7 @@ int main()
 	disc_index = 0;
 	discs = calloc(MAX_DISCS, sizeof(struct disc));
 	yylex();
+	display();
 }
 
 void update(char data)
@@ -69,7 +71,22 @@ void update(char data)
 		discs[disc_index].positions = data;
 	break;
 	case 2: /* start at (position) */
-		discs[disc_index].position = data;
+		discs[disc_index].pos = data;
 	break;
+	}
+}
+
+void show_disc(struct disc* disc_p)
+{
+	printf("numpos: %d pos: %d\n", disc_p->positions, disc_p->pos);
+}
+
+void display(void)
+{
+	char i;
+
+	for (i=1; i<100; i++) {
+		if (discs[i].positions != 0)
+			show_disc(&discs[i]);
 	}
 }
