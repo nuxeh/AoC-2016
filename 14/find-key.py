@@ -6,7 +6,7 @@ import sys
 import re
 
 input = 'ahsbgdzn'
-input = 'abc'
+#input = 'abc'
 num = 0
 count = 0
 
@@ -17,6 +17,7 @@ keys_found = 0
 
 found_keys_3 = []
 found_keys_5 = []
+
 
 while True:
     seed = input + str(num)
@@ -33,18 +34,19 @@ while True:
     if len(key_parts_3) > 0:
         found_keys_3.append((hex_string, key_parts_3[0], num));
 
-
     num += 1
     if (num == 100000):
         break
 
 
 for three in found_keys_3:
-
     for five in found_keys_5:
         if three[1][0] == five[1][0]:
-            if five[2] - three[2] <= 1000:
+            diff = five[2] - three[2]
+            if diff <= 1000 and diff > 0:
+                print diff
                 print three
+
 		keys_found += 1
 
 		if keys_found == 64:
