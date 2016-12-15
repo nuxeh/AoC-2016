@@ -7,8 +7,6 @@ import re
 
 input = 'ahsbgdzn'
 #input = 'abc'
-num = 0
-count = 0
 
 rep_re_3 = re.compile(r'(.)\1{2}')
 rep_re_5 = re.compile(r'(.)\1{4}')
@@ -18,6 +16,7 @@ keys_found = 0
 found_keys_3 = []
 found_keys_5 = []
 
+num = 0
 
 while True:
     seed = input + str(num)
@@ -25,10 +24,18 @@ while True:
     m.update(input + str(num))
     hex_string = m.hexdigest()
 
-    for n in xrange(1, 2016):
+    n = 0
+
+    while True:
         m = md5.new()
         m.update(hex_string)
         hex_string = m.hexdigest()
+
+        #print str(n) + ": " + hex_string
+
+        n += 1
+        if n == 2016:
+            break
 
     key_parts_3 = [match.group() for match in rep_re_3.finditer(hex_string)]
     key_parts_5 = [match.group() for match in rep_re_5.finditer(hex_string)]
@@ -40,7 +47,7 @@ while True:
         found_keys_3.append((hex_string, key_parts_3[0], num));
 
     num += 1
-    if (num == 10):
+    if (num == 1000000): # Needs optimising, really... :P
         break
 
 
