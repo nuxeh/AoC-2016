@@ -55,7 +55,7 @@ position	{ seq = 2;			}
 
 int main()
 {
-	int iterations;
+	unsigned long long iterations;
 
 	disc_index = 0;
 	num_discs  = 0;
@@ -69,15 +69,15 @@ int main()
 	iterations = 0;
 	display();
 	do {
+		iterations++;
 		advance_1s();
-		if (!verify())
-			break;
 #define DEBUG
 #ifdef DEBUG
 		printf("\n");
 		display();
 #endif
-		iterations++;
+		if (!verify())
+			break;
 	} while (1);
 
 	printf("solved in %d iterations (time=%ds)\n", iterations, iterations);
