@@ -78,7 +78,14 @@ void update(char data)
 
 void show_disc(struct disc* disc_p)
 {
-	printf("numpos: %d pos: %d\n", disc_p->positions, disc_p->pos);
+	char *string;
+
+	string = malloc(disc_p->positions * sizeof(char));
+	memset(string, '_', disc_p->positions);
+	string[disc_p->pos] = '|';
+
+	printf("numpos: %d\tpos: %d\t%s\n", disc_p->positions, disc_p->pos, string);
+	free(string);
 }
 
 void display(void)
