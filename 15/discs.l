@@ -3,6 +3,8 @@
  * Parse the list of disc positions
  */
 
+void update(char data);
+
 #if 0
 /* lexing pass */
 char pass = 0;
@@ -17,6 +19,9 @@ int yywrap()
 }
 #endif
 
+#define MAX_DISCS 100
+static char seq;
+
 struct disc {
 	char positions;
 	char position;
@@ -30,10 +35,16 @@ static struct disc *discs;
 %%
 [\t ]+		{ /* ignore whitespace */	}
 time=0		{ /* ignore time=0 */		}
+
+Disc		{ seq = 0;			}
+has		{ seq = 1;			}
+position	{ seq = 2;			}
+
 [0-9]+		{
 			printf("%d\n", atoi(yytext));
 			update(atoi(yytext));
 		}
+
 \n		{ printf("newline\n");		}
 .		{ /* ignore anything else*/	}
 %%
@@ -41,24 +52,24 @@ time=0		{ /* ignore time=0 */		}
 int main()
 {
 	disc_index = 0;
-	discs = calloc(100, sizeof(struct disc));
+	discs = calloc(MAX_DISCS, sizeof(struct disc));
 	yylex();
 }
 
-static char seq;
-
-int update(char data)
+void update(char data)
 {
 	switch (seq) {
-		case 0: /* disc number */
-			disc_index = data;
-		break;
-		case 1: /* number of positions */
-			discs[disc_index]->positions = data;
-		break;
-		case 2: /* start at (position) */
-			discs[disc_index]->position = data;
-		break;
+	case 0: /* disc number */
+		disc_index = data;
+		if (disc_index > MAX_DISCS)
+			printf("Maximum number of discs %s exceeded",
+				MAX_DISCS);
+	break;
+	case 1: /* number of positions */
+		discs[disc_index].positions = data;
+	break;
+	case 2: /* start at (position) */
+		discs[disc_index].position = data;
+	break;
 	}
-	seq++;
 }
