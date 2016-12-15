@@ -8,9 +8,11 @@
 %}
 
 %%
-[\t ]+		/* ignore whitespace */ ;
-[0-9]+		{ printf("%d\n", yytext); }
-\n		{ printf("newline"); }
+[\t ]+		{ /* ignore whitespace */	}
+time=0		{ /* ignore time=0 */		}
+[0-9]+		{ printf("%d\n", atoi(yytext));	}
+\n		{ printf("newline\n");		}
+.		{ /* ignore anything else*/	}
 %%
 
 int main()
