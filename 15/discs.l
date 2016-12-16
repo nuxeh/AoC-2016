@@ -89,10 +89,10 @@ int main()
 
 	do {
 		iterations++;
-		start_time++;
+		start_time += increment_by;
 		advance(increment_by);
 #ifdef DEBUG
-		printf("\niter:\t%d\nt:\t%d\ni:\t%d\n",
+		printf("\niter:\t%d\tt: %d\ti: %d\n",
 			iterations, start_time, increment_by);
 		display();
 #endif
@@ -165,11 +165,10 @@ void advance(char increment)
 void update_optimisation(char target)
 {
 	if (target > solved_levels) {
-		last_level_hit = start_time;
 		level_hits++;
 
 		if (level_hits > 1) {
-			increment_by  = last_level_hit - start_time;
+			increment_by  = start_time - last_level_hit;
 			solved_levels = target;
 			level_hits    = 0;
 
@@ -178,6 +177,8 @@ void update_optimisation(char target)
 			       increment_by, solved_levels);
 #endif
 		}
+
+		last_level_hit = start_time;
 	}
 }
 #endif
