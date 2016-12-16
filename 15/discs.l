@@ -23,7 +23,7 @@ int yywrap()
 #endif
 
 #define MAX_DISCS 100
-#define DEBUG
+//#define DEBUG
 #define OPTIMISE
 
 /* lexing state variable */
@@ -100,6 +100,7 @@ int main()
 			break;
 	} while (1);
 
+	display();
 	printf("solved in %d iterations (time=%ds)\n", iterations, start_time);
 }
 
@@ -176,6 +177,8 @@ void update_optimisation(char target)
 			printf("update opt. i: %d l: %d\n",
 			       increment_by, solved_levels);
 #endif
+			printf("current level: %d increment: %d\n", solved_levels, increment_by);
+			display();
 		}
 
 		last_level_hit = start_time;
