@@ -24,7 +24,7 @@ int yywrap()
 
 #define MAX_DISCS 100
 //#define DEBUG
-#define OPTIMISE
+//#define OPTIMISE
 
 /* lexing state variable */
 static char seq;
@@ -200,10 +200,10 @@ char verify(void)
 	target = 1;
 	for (i=1; i<100; i++) {
 		if (discs[i].positions != 0) {
-			n_from_end = (discs[i].positions - discs[i].pos);
 
 			/* bounce - no solution */
-			if ((n_from_end % target) != 0) {
+			if ((discs[i].pos + target) % discs[i].positions != 0)
+			{
 #ifdef OPTIMISE
 				update_optimisation(target);
 #endif
