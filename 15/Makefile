@@ -18,3 +18,5 @@ clean:
 .PHONY: run
 run: discs
 	cat input.txt | ./discs
+
+# TODO: Phony targets don't rebuild when source is changed

@@ -6,7 +6,7 @@
 void update(char data);
 void display(void);
 char verify(void);
-void advance_1s(void);
+void advance(char increment);
 
 #if 0
 /* lexing pass */
@@ -23,8 +23,13 @@ int yywrap()
 #endif
 
 #define MAX_DISCS 100
+#define DEBUG
+#define OPTIMISE
+
+/* lexing state variable */
 static char seq;
 
+/* disc data structure */
 struct disc {
 	char positions;
 	char pos;
@@ -33,6 +38,14 @@ struct disc {
 static char disc_index;
 static struct disc *discs;
 static char num_discs;
+
+
+/* variables used for optimisation */
+static unsigned long long start_time;
+static char increment_by;
+static char solved_levels;
+static char level_hits;
+static char last_level_hit;
 
 %}
 
@@ -57,30 +70,37 @@ int main()
 {
 	unsigned long long iterations;
 
-	disc_index = 0;
-	num_discs  = 0;
+	disc_index    = 0;
+	num_discs     = 0;
+	solved_levels = 0;
 
 	discs = calloc(MAX_DISCS, sizeof(struct disc));
 
+	/* lex the input */
 	yylex();
+
+	display();
 	printf("number of discs: %d\n", num_discs);
 
 	/* look for solution */
-	iterations = 0;
-	display();
+	iterations   = 0;
+	start_time   = 0;
+	increment_by = 1;
+
 	do {
 		iterations++;
-		advance_1s();
-#define DEBUG
+		start_time++;
+		advance(increment_by);
 #ifdef DEBUG
-		printf("\n");
+		printf("\niter:\t%d\nt:\t%d\ni:\t%d\n",
+			iterations, start_time, increment_by);
 		display();
 #endif
 		if (!verify())
 			break;
 	} while (1);
 
-	printf("solved in %d iterations (time=%ds)\n", iterations, iterations);
+	printf("solved in %d iterations (time=%ds)\n", iterations, start_time);
 }
 
 void update(char data)
@@ -125,21 +145,48 @@ void display(void)
 	}
 }
 
-void advance_1s(void)
+void advance(char increment)
 {
 	char i;
 
 	for (i=1; i<100; i++) {
 		if (discs[i].positions != 0) {
-			discs[i].pos += 1;
-
-			if (discs[i].pos == discs[i].positions)
-				discs[i].pos = 0;
-
+			discs[i].pos = ((discs[i].pos + increment)
+					% discs[i].positions);
 		}
 	}
 }
 
+/*
+ * Update solved levels, if this is the second time the capsule has reached
+ * the current level, update the incrementation amount as the difference.
+ */
+#ifdef OPTIMISE
+void update_optimisation(char target)
+{
+	if (target > solved_levels) {
+		last_level_hit = start_time;
+		level_hits++;
+
+		if (level_hits > 1) {
+			increment_by  = last_level_hit - start_time;
+			solved_levels = target;
+			level_hits    = 0;
+
+#ifdef DEBUG
+			printf("update opt. i: %d l: %d\n",
+			       increment_by, solved_levels);
+#endif
+		}
+	}
+}
+#endif
+
+/*
+ * The capsule drops through if successive discs are a distance from wrapping
+ * around to position 0, which increases by one per disc, since the ball takes
+ * one time period to proceed down one level down, per disc.
+ */
 char verify(void)
 {
 	char i;
@@ -152,8 +199,16 @@ char verify(void)
 			n_from_end = discs[i].positions - discs[i].pos;
 
 			/* bounce - no solution */
-			if (n_from_end != target)
+			if (n_from_end != target) {
+#ifdef OPTIMISE
+				update_optimisation(target);
+#endif
+#ifdef DEBUG
+				printf("ball:\t%d\n", target);
+#endif
+				/* stop processing this time slot */
 				break;
+			}
 
 			/* finished */
 			if (target == num_discs)
@@ -165,3 +220,25 @@ char verify(void)
 
 	return 1;
 }
+
+/* Optimisation * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *
+ * iter:	17
+ * iter:	82
+ * iter:	147
+ * iter:	212
+ * iter:	277
+ * iter:	342
+ * iter:	407
+ * iter:	472
+ * iter:	537
+ * iter:	602
+ *
+ * The ball gets to the third level each 65 iterations (for
+ * this data)
+ *
+ * Each time a new level is solved, from that point onwards, increment by the
+ * number of steps it took to solve up to that level, so as not to repeat the
+ * calculations necessary to get that far, redundantly.
+ *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
