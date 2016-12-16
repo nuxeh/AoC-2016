@@ -200,10 +200,10 @@ char verify(void)
 	target = 1;
 	for (i=1; i<100; i++) {
 		if (discs[i].positions != 0) {
-			n_from_end = discs[i].positions - discs[i].pos;
+			n_from_end = (discs[i].positions - discs[i].pos);
 
 			/* bounce - no solution */
-			if (n_from_end != target) {
+			if ((n_from_end % target) != 0) {
 #ifdef OPTIMISE
 				update_optimisation(target);
 #endif
